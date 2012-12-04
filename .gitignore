@@ -13,6 +13,7 @@ app/design/frontend/enterprise/default
 app/design/install/
 app/etc/modules/Enterprise_*
 app/etc/modules/Find_Feed.xml
+app/etc/modules/Mage_*
 app/etc/modules/Mage_All.xml
 app/etc/modules/Mage_Api.xml
 app/etc/modules/Mage_Authorizenet.xml
@@ -29,6 +30,7 @@ app/etc/modules/Mage_Weee.xml
 app/etc/modules/Mage_Widget.xml
 app/etc/modules/Mage_XmlConnect.xml
 app/etc/modules/Phoenix_Moneybookers.xml
+app/etc/local.xml
 app/etc/config.xml
 app/etc/enterprise.xml
 app/etc/local.xml.additional
@@ -77,8 +79,10 @@ LICENSE.html
 LICENSE.txt
 LICENSE_EE*
 mage
+media/catalog/
 media/customer/
 media/downloadable/
+media/dhl/
 media/.htaccess
 media/import/
 media/xmlconnect/
@@ -88,6 +92,8 @@ pear/
 php.ini.sample
 pkginfo/
 RELEASE_NOTES.txt
+.htaccess*
+api.php
 shell/abstract.php
 shell/compiler.php
 shell/indexer.php
