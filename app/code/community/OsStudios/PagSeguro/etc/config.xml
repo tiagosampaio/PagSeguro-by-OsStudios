@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Os Studios PagSeguro Payment Module
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   OsStudios
+ * @package    OsStudios_PagSeguro
+ * @copyright  Copyright (c) 2012 Os Studios (www.osstudios.com.br)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
+ */
+-->
+
+<config>
+    <modules>
+        <OsStudios_PagSeguro>
+            <version>1.0.0.2</version>          
+        </OsStudios_PagSeguro>
+    </modules>
+    <global>
+    	<helpers>
+            <pagseguro>
+                <class>OsStudios_PagSeguro_Helper</class>
+            </pagseguro>
+        </helpers>
+        <blocks>
+            <pagseguro>
+                <class>OsStudios_PagSeguro_Block</class>
+            </pagseguro>
+        </blocks>
+        <models>
+            <pagseguro>
+                <class>OsStudios_PagSeguro_Model</class>
+            </pagseguro>
+        </models>
+        <resources>
+            <pagseguro_setup>
+                <setup>
+                    <module>OsStudios_PagSeguro</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </pagseguro_setup>
+            <pagseguro_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </pagseguro_write>
+            <pagseguro_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </pagseguro_read>
+        </resources>
+    </global>
+    <adminhtml>
+    	<translate>
+	        <modules>
+	            <pagseguro>
+	                <files>
+	                    <default>OsStudios_PagSeguro.csv</default>
+	                </files>
+	            </pagseguro>
+	        </modules>
+	    </translate>
+	    <layout>
+            <updates>
+                <pagseguro>
+                    <file>osstudios_pagseguro.xml</file>
+                </pagseguro>
+            </updates>
+        </layout>
+    </adminhtml>
+    <frontend>      
+        <routers>
+            <pagseguro>
+                <use>standard</use>
+                <args>
+                    <module>OsStudios_PagSeguro</module>
+                    <frontName>pagseguro</frontName>
+                </args>
+            </pagseguro>
+        </routers>
+        <translate>
+            <modules>
+                <pagseguro>
+                    <files>
+                        <default>OsStudios_PagSeguro.csv</default>
+                    </files>
+                </pagseguro>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <pagseguro>
+                    <file>osstudios_pagseguro.xml</file>
+                </pagseguro>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <pagseguro>
+                <use>admin</use>
+                <args>
+                    <module>OsStudios_PagSeguro</module>
+                    <frontName>pagseguro</frontName>
+                </args>
+            </pagseguro>
+        </routers>
+    </admin>
+    <default>
+         <payment>
+             <pagseguro_config>
+             	 <pagseguro_url>https://pagseguro.uol.com.br/security/webpagamentos/webpagto.aspx</pagseguro_url>
+                 <pagseguro_npi_url>https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml</pagseguro_npi_url>
+                 <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml</pagseguro_billet_url>
+                 <pagseguro_transactions_url>https://ws.pagseguro.uol.com.br/v2/transactions</pagseguro_transactions_url>
+                 <log_enable>0</log_enable>
+                 <use_curl>1</use_curl>
+                 <return_default_enable>1</return_default_enable>
+                 <return_api_enable>1</return_api_enable>
+                 <paid_orders_change_to>processing</paid_orders_change_to>
+                 <canceled_orders_change_to>canceled</canceled_orders_change_to>
+                 <return_consult_range>30</return_consult_range>
+             </pagseguro_config>
+             <pagseguro_hpp>
+                 <model>OsStudios_PagSeguro_Model_Hpp</model>
+                 <active>0</active>
+                 <title>PagSeguro UOL</title>
+                 <order_status>pending</order_status>
+                 <custom_address_model>0</custom_address_model>
+                 <msg_add>You will be redirected to PagSeguro after the order confirmation.</msg_add>
+                 <installments_show>0</installments_show>
+                 <installments_add>0</installments_add>
+                 <installments_upfront>0</installments_upfront>
+                 <price_grouping>0</price_grouping>
+                 <shipping_price>separated</shipping_price>
+                 <use_return_page_cms>0</use_return_page_cms>
+                 <allowspecific>0</allowspecific>
+            </pagseguro_hpp>
+        </payment>
+    </default>
+    <crontab>
+    	<jobs>
+    		<pagseguro_orders_consult_states>
+    			<schedule>
+    				<cron_expr>*/15 * * * *</cron_expr>
+    			</schedule>
+    			<run>
+    				<model>pagseguro/observer::cronConsultOrderStates</model>
+    			</run>
+    		</pagseguro_orders_consult_states>
+    	</jobs>
+    </crontab>
+</config>

@@ -1,0 +1,32 @@
+<?php
+/**
+ * Os Studios PagSeguro Payment Module
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   payment
+ * @package    OsStudios_PagSeguro
+ * @copyright  Copyright (c) 2012 Os Studios (www.osstudios.com.br)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
+ */
+?>
+
+<?php
+if ($this->isShowPaylink()): ?>
+
+		<div class="buttons-set">
+          <p>
+           Caso voc&ecirc; n&atilde;o tenha efetuado o pagamento atrav&eacute;s do <strong>PagSeguro</strong> no momento da conclus&atilde;o de seu pedido,<br />
+           voc&ecirc; pode faz&ecirc;-lo clicando no bot&atilde;o abaixo
+          </p>
+          
+          <a href="<?php echo $this->getPaymentUrl() ?>" target="_blank"><img src="https://pagseguro.uol.com.br/Security/Imagens/btnPagueComBR.jpg" alt="Pague com o PagSeguro - &eacute; r&aacute;pido, gr&aacute;tis e seguro!" /></a>
+          
+		</div>
+        
+<?php endif; ?>
