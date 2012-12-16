@@ -246,85 +246,85 @@ class OsStudios_PagSeguro_Model_Returns extends OsStudios_PagSeguro_Model_Abstra
 		
 		switch ($type)
 		{
-			/**
-			 * Returns from PagSeguro API
-			 */
-			case self::PAGSEGURO_RETURN_TYPE_API:
-				
-				if($this->getConfigData('return_api_enable')) {
-					$this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_API_STRING));
-					
-					$model = Mage::getModel('pagseguro/returns_types_api');
-					$this->_response = $model->setPostData($post)->processReturn()->getResponse();
-					
-					$errArray = array(self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED, self::PAGSEGURO_RETURN_RESPONSE_ERROR);
-					
-					if(in_array($this->_response, $errArray)) {
-						$this->_success = false;
-					} else {
-						$this->_success = true;
-					}
-				}
-				break;
-			
-			/**
-			 *  Self consulting 
-			 */
-			case self::PAGSEGURO_RETURN_TYPE_CONSULT:
-				
-				$this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_CONSULT_STRING));
-				
-				$stop = false;
-				
-				$model = Mage::getModel('pagseguro/returns_types_consult');
-				
-				$this->_response = $model->processReturn()->getResponse();
-				
-				$this->log( $this->__('Response from Pagseguro: %s', $this->_response) );
-				
-				if($this->_response == self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED) {
-					$errMsg = $this->__('%sThe consult was not authorized by PagSeguro.', self::TABS);
-					$stop = true;
-				} elseif ($this->_response == self::PAGSEGURO_RETURN_RESPONSE_ERROR) {
-					$errMsg = $this->__('%sPagSeguro has returned an error.', self::TABS);
-					$stop = true;
-				}
-				
-				if(Mage::getSingleton('admin/session') && $stop) {					
-					Mage::getSingleton('adminhtml/session')->addError($errMsg);
-					return $this;
-				}
-				
-				$this->_success = true;
-				
-				break;
-				
-			/**
-			 * Automatic return from PagSeguro
-			 */
-			case self::PAGSEGURO_RETURN_TYPE_DEFAULT:
-			default:
-				
-				if($this->getConfigData('return_default_enable')) {
-					$this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_DEFAULT_STRING));
-					
-					if($this->_validate()) {
-						$this->log($this->__('%sValidation Successfully Done.', self::TABS));
-						$model = Mage::getModel('pagseguro/returns_types_default');
-						$this->_response = $model->setPostData($post)->processReturn()->getResponse();
-					} else {
-						$this->log($this->__('%sValidation Failed.', self::TABS));
-					}
-					
-					$errArray = array(self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED, self::PAGSEGURO_RETURN_RESPONSE_ERROR);
-					
-					if(in_array($this->_response, $errArray)) {
-						$this->_success = false;
-					} else {
-						$this->_success = true;
-					}
-				}
-				break;
+                    /**
+                     * Returns from PagSeguro API
+                     */
+                    case self::PAGSEGURO_RETURN_TYPE_API:
+
+                        if($this->getConfigData('return_api_enable')) {
+                            $this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_API_STRING));
+
+                            $model = Mage::getModel('pagseguro/returns_types_api');
+                            $this->_response = $model->setPostData($post)->processReturn()->getResponse();
+
+                            $errArray = array(self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED, self::PAGSEGURO_RETURN_RESPONSE_ERROR);
+
+                            if(in_array($this->_response, $errArray)) {
+                                $this->_success = false;
+                            } else {
+                                $this->_success = true;
+                            }
+                        }
+                        break;
+
+                    /**
+                     *  Self consulting 
+                     */
+                    case self::PAGSEGURO_RETURN_TYPE_CONSULT:
+
+                        $this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_CONSULT_STRING));
+
+                        $stop = false;
+
+                        $model = Mage::getModel('pagseguro/returns_types_consult');
+
+                        $this->_response = $model->processReturn()->getResponse();
+
+                        $this->log( $this->__('Response from Pagseguro: %s', $this->_response) );
+
+                        if($this->_response == self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED) {
+                            $errMsg = $this->__('%sThe consult was not authorized by PagSeguro.', self::TABS);
+                            $stop = true;
+                        } elseif ($this->_response == self::PAGSEGURO_RETURN_RESPONSE_ERROR) {
+                            $errMsg = $this->__('%sPagSeguro has returned an error.', self::TABS);
+                            $stop = true;
+                        }
+
+                        if(Mage::getSingleton('admin/session') && $stop) {					
+                            Mage::getSingleton('adminhtml/session')->addError($errMsg);
+                            return $this;
+                        }
+
+                        $this->_success = true;
+
+                        break;
+
+                    /**
+                     * Automatic return from PagSeguro
+                     */
+                    case self::PAGSEGURO_RETURN_TYPE_DEFAULT:
+                    default:
+
+                        if($this->getConfigData('return_default_enable')) {
+                            $this->log($this->__('%sReturn Type: %s.', self::TABS, self::PAGSEGURO_RETURN_TYPE_DEFAULT_STRING));
+
+                            if($this->_validate()) {
+                                $this->log($this->__('%sValidation Successfully Done.', self::TABS));
+                                $model = Mage::getModel('pagseguro/returns_types_default');
+                                $this->_response = $model->setPostData($post)->processReturn()->getResponse();
+                            } else {
+                                $this->log($this->__('%sValidation Failed.', self::TABS));
+                            }
+
+                            $errArray = array(self::PAGSEGURO_RETURN_RESPONSE_UNAUTHORIZED, self::PAGSEGURO_RETURN_RESPONSE_ERROR);
+
+                            if(in_array($this->_response, $errArray)) {
+                                $this->_success = false;
+                            } else {
+                                $this->_success = true;
+                            }
+                        }
+                        break;
 		}
 		
 		$this->_afterReturns();

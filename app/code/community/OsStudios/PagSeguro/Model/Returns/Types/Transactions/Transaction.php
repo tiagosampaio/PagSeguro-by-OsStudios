@@ -355,10 +355,10 @@ class OsStudios_PagSeguro_Model_Returns_Types_Transactions_Transaction extends O
                 case self::STATUS_CANCELED_STRING:
                 case self::STATUS_RETURNED:
                     
-                	$result = $ordersModel->processOrderCanceled()->getResponse();
-                	if($result === OsStudios_PagSeguro_Model_Returns_Orders::ORDER_NOTPROCESSED) {
-                		return false;
-                	}
+                    $result = $ordersModel->processOrderCanceled()->getResponse();
+                    if($result === OsStudios_PagSeguro_Model_Returns_Orders::ORDER_NOTPROCESSED) {
+                            return false;
+                    }
                 	
                     break;
                 case self::STATUS_WAITING_PAYMENT:
@@ -368,10 +368,10 @@ class OsStudios_PagSeguro_Model_Returns_Types_Transactions_Transaction extends O
                 case self::STATUS_IN_DISPUTE:
                 default:
                     
-                	$result = $ordersModel->processOrderWaiting()->getResponse();
-            		if($result === OsStudios_PagSeguro_Model_Returns_Orders::ORDER_NOTPROCESSED) {
-                		return false;
-                	}
+                    $result = $ordersModel->processOrderWaiting()->getResponse();
+                    if($result === OsStudios_PagSeguro_Model_Returns_Orders::ORDER_NOTPROCESSED) {
+                            return false;
+                    }
                 	
                     break;
             }

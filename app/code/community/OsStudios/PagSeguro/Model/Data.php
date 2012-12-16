@@ -18,22 +18,22 @@
 class OsStudios_PagSeguro_Model_Data extends OsStudios_PagSeguro_Model_Abstract
 {
    
-	public function isReturnApi($post)
-	{
-		if( isset($post['notificationCode']) && isset($post['notificationType']) ) {
-			return true;
-		}
-	}
+    public function isReturnApi($post)
+    {
+        if( isset($post['notificationCode']) && isset($post['notificationType']) ) {
+            return true;
+        }
+    }
 	
-	public function isReturnDefault($post)
-	{
-		if( isset($post['VendedorEmail']) 	&& isset($post['TransacaoID']) 		&& isset($post['Referencia']) 	&& isset($post['DataTransacao']) &&
-			isset($post['TipoPagamento']) 	&& isset($post['StatusTransacao']) 	&& isset($post['CliNome']) 		&& isset($post['CliEmail']) &&
-			isset($post['CliEndereco']) 	&& isset($post['CliCidade']) 		&& isset($post['CliEstado']) 	&& isset($post['CliCEP']) && 
-			isset($post['CliTelefone']) 	&& isset($post['NumItens']) 		&& isset($post['Parcelas']) )
-		{
-			return true;
-		}
-	}
+    public function isReturnDefault($post)
+    {
+        if( isset($post['VendedorEmail']) 	&& isset($post['TransacaoID']) 		&& isset($post['Referencia']) 	&& isset($post['DataTransacao']) &&
+            isset($post['TipoPagamento']) 	&& isset($post['StatusTransacao']) 	&& isset($post['CliNome']) 		&& isset($post['CliEmail']) &&
+            isset($post['CliEndereco']) 	&& isset($post['CliCidade']) 		&& isset($post['CliEstado']) 	&& isset($post['CliCEP']) && 
+            isset($post['CliTelefone']) 	&& isset($post['NumItens']) 		&& isset($post['Parcelas']) )
+        {
+            return true;
+        }
+    }
 	
 }

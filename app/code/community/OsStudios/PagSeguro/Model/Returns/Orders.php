@@ -25,10 +25,11 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	
 	protected $_order = null;
 	protected $_response = self::ORDER_NOTPROCESSED;
-	
+	protected $_canProcess = true;
+        
 	public function getResponse()
 	{
-		return $this->_response;
+            return $this->_response;
 	}
 	
 	
@@ -37,7 +38,12 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	protected function _beforeProcessOrder()
 	{
-		$this->log($this->__('%s--- Initializing order process ---', self::TABS));
+            if(!$this->getConfigData('enable_order_update', Mage::app()->getStore())) {
+                $this->_canProcess = false;
+                return $this;
+            }
+            
+            $this->log($this->__('%s--- Initializing order process ---', self::TABS));
 	}
 	
 	
@@ -46,7 +52,7 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	protected function _afterProcessOrder()
 	{
-		$this->log($this->__('%s--- Finishing order process ---', self::TABS));
+            $this->log($this->__('%s--- Finishing order process ---', self::TABS));
 	}
 	
 	
@@ -58,8 +64,8 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	public function setOrder(Mage_Sales_Model_Order $order)
 	{
-		$this->_order = $order;
-		return $this;
+            $this->_order = $order;
+            return $this;
 	}
 	
 	
@@ -70,8 +76,8 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	public function unsetOrder()
 	{
-		$this->_order = null;
-		return $this;
+            $this->_order = null;
+            return $this;
 	}
 	
 	
@@ -82,42 +88,43 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	public function processOrderCanceled()
 	{
-		
-		$this->_beforeProcessOrder();
-		
-		if(!$this->_order) {
-			return $this;
-		}
-		
-		$order = $this->_order;
-		
-		if ($order->canUnhold()) {
-			$order->unhold();
-			$this->log($this->__('%sThe order was unholded.', self::TABS));
-		}
+            $this->_beforeProcessOrder();
+            
+            if(!($order = $this->_order)) {
+                return $this;
+            }
+            
+            if(!$this->_canProcess) {
+                return $this;
+            }
+            
+            if ($order->canUnhold()) {
+                $order->unhold();
+                $this->log($this->__('%sThe order was unholded.', self::TABS));
+            }
                     
-		if($this->_order->canCancel()) {
-            $state = $this->getConfigData('canceled_orders_change_to');
-            $status = $this->getConfigData('canceled_orders_change_to');
-            $comment = $this->__('Order was canceled by PagSeguro.');
-                        
-            $order->getPayment()->setMessage($comment)->save();
-            $order->setState($state, $status, $comment, true)->save();
-			$order->cancel();
+            if($order->canCancel()) {
+                $state = $this->getConfigData('canceled_orders_change_to');
+                $status = $this->getConfigData('canceled_orders_change_to');
+                $comment = $this->__('Order was canceled by PagSeguro.');
+
+                $order->getPayment()->setMessage($comment)->save();
+                $order->setState($state, $status, $comment, true)->save();
+                $order->cancel();
+
+                $this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
+                $this->log($this->__('%sThe order was successfully processed.', self::TABS));
+                $this->log($this->__('%sNew status: %s.', self::TABS, $status));
 			
-			$this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
-            $this->log($this->__('%sThe order was successfully processed.', self::TABS));
-            $this->log($this->__('%sNew status: %s.', self::TABS, $status));
-			
-			$this->_response = self::ORDER_PROCESSED;
-		} else {
-			$this->log($this->__('%sThe order was not processed.', self::TABS));
-			$this->_response = self::ORDER_NOTPROCESSED;
-		}
+                $this->_response = self::ORDER_PROCESSED;
+            } else {
+                $this->log($this->__('%sThe order was not processed.', self::TABS));
+                $this->_response = self::ORDER_NOTPROCESSED;
+            }
 		
-		$this->_afterProcessOrder();
-		
-		return $this;
+            $this->_afterProcessOrder();
+
+            return $this;
 	}
 	
 	
@@ -129,53 +136,55 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	public function processOrderApproved()
 	{
 		
-		$this->_beforeProcessOrder();
-		
-		if(!$this->_order) {
-			return $this;
-		}
-		
-		$order = $this->_order;
-		
-		if($order->canUnhold()) {
-        	$order->unhold();
-        	$this->log($this->__('%sThe order was unholded.', self::TABS));
-		}
-                    
-		if($order->canInvoice()) {
-                        
-            $state = $this->getConfigData('paid_orders_change_to');
-            $status = $this->getConfigData('paid_orders_change_to');
-            $comment = $this->__('Payment confirmed by PagSeguro (%s). PagSeguro Transaction: %s.', $this->getPaymentMethodType(), $this->getCode()) ;
-            $notify = true;
-            $visibleOnFront = true;
-                        
-            $invoice = $order->prepareInvoice();
-            $invoice->register()->pay();
-            $invoice->addComment($comment, $notify, $visibleOnFront)->save();
-            $invoice->sendUpdateEmail($visibleOnFront, $comment);
-            $invoice->setEmailSent(true);
-                        
-            Mage::getModel('core/resource_transaction')->addObject($invoice)
-                                                       ->addObject($invoice->getOrder())
-                                                       ->save();
-                        
-            $comment = $this->__('Invoice #%s was created.', $invoice->getIncrementId());
-            $order->setState($state, $status, $comment, true)->save();
-			
-            $this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
-            $this->log($this->__('%sThe order was successfully processed.', self::TABS));
-            $this->log($this->__('%sNew status: %s.', self::TABS, $status));
+            $this->_beforeProcessOrder();
             
-            $this->_response = self::ORDER_PROCESSED;
-		} else {
-			$this->log($this->__('%sThe order was not processed.', self::TABS));
-			$this->_response = self::ORDER_NOTPROCESSED;
-		}
+            if(!($order = $this->_order)) {
+                return $this;
+            }
+
+            if(!$this->_canProcess) {
+                return $this;
+            }
+
+            if($order->canUnhold()) {
+                $order->unhold();
+                $this->log($this->__('%sThe order was unholded.', self::TABS));
+            }
+                    
+            if($order->canInvoice()) {
+                        
+                $state = $this->getConfigData('paid_orders_change_to');
+                $status = $this->getConfigData('paid_orders_change_to');
+                $comment = $this->__('Payment confirmed by PagSeguro (%s). PagSeguro Transaction: %s.', $this->getPaymentMethodType(), $this->getCode()) ;
+                $notify = true;
+                $visibleOnFront = true;
+
+                $invoice = $order->prepareInvoice();
+                $invoice->register()->pay();
+                $invoice->addComment($comment, $notify, $visibleOnFront)->save();
+                $invoice->sendUpdateEmail($visibleOnFront, $comment);
+                $invoice->setEmailSent(true);
+
+                Mage::getModel('core/resource_transaction')->addObject($invoice)
+                                                           ->addObject($invoice->getOrder())
+                                                           ->save();
+
+                $comment = $this->__('Invoice #%s was created.', $invoice->getIncrementId());
+                $order->setState($state, $status, $comment, true)->save();
+
+                $this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
+                $this->log($this->__('%sThe order was successfully processed.', self::TABS));
+                $this->log($this->__('%sNew status: %s.', self::TABS, $status));
+
+                $this->_response = self::ORDER_PROCESSED;
+            } else {
+                $this->log($this->__('%sThe order was not processed.', self::TABS));
+                $this->_response = self::ORDER_NOTPROCESSED;
+            }
 		
-		$this->_afterProcessOrder();
-		
-		return $this;
+            $this->_afterProcessOrder();
+
+            return $this;
 	}
 	
 	
@@ -186,29 +195,28 @@ class OsStudios_PagSeguro_Model_Returns_Orders extends OsStudios_PagSeguro_Model
 	 */
 	public function processOrderWaiting()
 	{
+            $this->_beforeProcessOrder();
 		
-		$this->_beforeProcessOrder();
+            if(!$this->_order) {
+                return $this;
+            }
 		
-		if(!$this->_order) {
-			return $this;
-		}
+            $order = $this->_order;
 		
-		$order = $this->_order;
-		
-		if($order->canHold()) {
-			$order->hold()->save();
+            if($order->canHold()) {
+                $order->hold()->save();
 			
-			$this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
-            $this->log($this->__('%sThe order was successfully holded.', self::TABS));
+                $this->log($this->__('%sOrder was found in history: #%s', self::TABS, $order->getRealOrderId()));
+                $this->log($this->__('%sThe order was successfully holded.', self::TABS));
 			
-			$this->_response = self::ORDER_PROCESSED;
-		} else {
-			$this->log($this->__('%sThe order was not processed.', self::TABS));
-			$this->_response = self::ORDER_NOTPROCESSED;
-		}
-		
-		$this->_afterProcessOrder();
-		
-		return $this;
+                $this->_response = self::ORDER_PROCESSED;
+            } else {
+                $this->log($this->__('%sThe order was not processed.', self::TABS));
+                $this->_response = self::ORDER_NOTPROCESSED;
+            }
+
+            $this->_afterProcessOrder();
+
+            return $this;
 	}
 }
