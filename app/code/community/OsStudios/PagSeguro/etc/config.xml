@@ -157,6 +157,65 @@
                  <message>You will be redirected to PagSeguro after the order confirmation using API features.</message>
              </pagseguro_api>
         </payment>
+        <api_error_codes>
+            <code_11001>receiverEmail is required.</code_11001>
+            <code_11002>receiverEmail invalid length: {0}</code_11002>
+            <code_11003>receiverEmail invalid value.</code_11003>
+            <code_11004>Currency is required.</code_11004>
+            <code_11005>Currency invalid value: {0}</code_11005>
+            <code_11006>redirectURL invalid length: {0}</code_11006>
+            <code_11007>redirectURL invalid value: {0}</code_11007>
+            <code_11008>reference invalid length: {0}</code_11008>
+            <code_11009>senderEmail invalid length: {0}</code_11009>
+            <code_11010>senderEmail invalid value: {0}</code_11010>
+            <code_11011>senderName invalid length: {0}</code_11011>
+            <code_11012>senderName invalid value: {0}</code_11012>
+            <code_11013>senderAreaCode invalid value: {0}</code_11013>
+            <code_11014>senderPhone invalid value: {0}</code_11014>
+            <code_11015>ShippingType is required.</code_11015>
+            <code_11016>shippingType invalid type: {0}</code_11016>
+            <code_11017>shippingPostalCode invalid Value: {0}</code_11017>
+            <code_11018>shippingAddressStreet invalid length: {0}</code_11018>
+            <code_11019>shippingAddressNumber invalid length: {0}</code_11019>
+            <code_11020>shippingAddressComplement invalid length: {0}</code_11020>
+            <code_11021>shippingAddressDistrict invalid length: {0}</code_11021>
+            <code_11022>shippingAddressCity invalid length: {0}</code_11022>
+            <code_11023>shippingAddressState invalid value: {0}, must fit the pattern: \w\{2\} (e. g. "SP")</code_11023>
+            <code_11024>Itens invalid quantity.</code_11024>
+            <code_11025>Item Id is required.</code_11025>
+            <code_11026>Item quantity is required.</code_11026>
+            <code_11027>Item quantity out of range: {0}</code_11027>
+            <code_11028>Item amount is required. (e.g. "12.00")</code_11028>
+            <code_11029>Item amount invalid pattern: {0}. Must fit the patern: \d+.\d\{2\}</code_11029>
+            <code_11030>Item amount out of range: {0}</code_11030>
+            <code_11031>Item shippingCost invalid pattern: {0}. Must fit the patern: \d+.\d\{2\}</code_11031>
+            <code_11032>Item shippingCost out of range: {0}</code_11032>
+            <code_11033>Item description is required.</code_11033>
+            <code_11034>Item description invalid length: {0}</code_11034>
+            <code_11035>Item weight invalid Value: {0}</code_11035>
+            <code_11036>Extra amount invalid pattern: {0}. Must fit the patern: -?\d+.\d\{2\}</code_11036>
+            <code_11037>Extra amount out of range: {0}</code_11037>
+            <code_11038>Invalid receiver for checkout: {0}, verify receiver's account status.</code_11038>
+            <code_11039>Malformed request XML: {0}.</code_11039>
+            <code_11040>maxAge invalid pattern: {0}. Must fit the patern: \d+</code_11040>
+            <code_11041>maxAge out of range: {0}</code_11041>
+            <code_11042>maxUses invalid pattern: {0}. Must fit the patern: \d+</code_11042>
+            <code_11043>maxUses out of range.</code_11043>
+            <code_11044>initialDate is required.</code_11044>
+            <code_11045>initialDate must be lower than allowed limit.</code_11045>
+            <code_11046>initialDate must not be older than 6 months.</code_11046>
+            <code_11047>initialDate must be lower than or equal finalDate.</code_11047>
+            <code_11048>search interval must be lower than or equal 30 days.</code_11048>
+            <code_11049>finalDate must be lower than allowed limit.</code_11049>
+            <code_11050>initialDate invalid format, use 'yyyy-MM-ddTHH:mm' (eg. 2010-01-27T17:25).</code_11050>
+            <code_11051>finalDate invalid format, use 'yyyy-MM-ddTHH:mm' (eg. 2010-01-27T17:25).</code_11051>
+            <code_11052>page invalid value.</code_11052>
+            <code_11053>maxPageResults invalid value (must be between 1 and 1000).</code_11053>
+            <code_11054>abandonURL invalid length: {0}</code_11054>
+            <code_11055>abandonURL invalid value: {0}</code_11055>
+            <code_11056>sender address required invalid value: {0}</code_11056>
+            <code_11057>sender address not required with address data filled</code_11057>
+        </api_error_codes>
     </default>
     <crontab>
     	<jobs>
