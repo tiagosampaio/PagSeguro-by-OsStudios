@@ -1,0 +1,7 @@
+<fieldset class="form-list">
+    <ul id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display:none;">
+        <?php if ($this->getShowMessage()): ?>
+        <li><?php echo $this->getMessage(); ?></li>
+        <?php endif; ?>
+    </ul>
+</fieldset>
