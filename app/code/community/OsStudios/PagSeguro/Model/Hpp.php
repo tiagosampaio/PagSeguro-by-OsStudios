@@ -18,9 +18,9 @@
 class OsStudios_PagSeguro_Model_Hpp extends OsStudios_PagSeguro_Model_Payment
 {
     
-    protected $_code = 'pagseguro_hpp';
-    protected $_formBlockType = 'pagseguro/form';
-    protected $_infoBlockType = 'pagseguro/info';
+    protected $_code = self::PAGSEGURO_METHOD_CODE_HPP;
+    protected $_formBlockType = 'pagseguro/hpp_form';
+    protected $_infoBlockType = 'pagseguro/hpp_info';
     
     protected $_canUseInternal = true;
     protected $_canUseForMultishipping = false;
@@ -80,8 +80,8 @@ class OsStudios_PagSeguro_Model_Hpp extends OsStudios_PagSeguro_Model_Payment
     }
     
     
-	/**
-	 * getOrderPlaceRedirectUrl
+    /**
+     * getOrderPlaceRedirectUrl
      * 
      * Cria a URL de redirecionamento ao PagSeguro, utilizando
      * o ID do pedido caso este seja informado
@@ -91,13 +91,13 @@ class OsStudios_PagSeguro_Model_Hpp extends OsStudios_PagSeguro_Model_Payment
 	 * @return string
 	 */
     public function getOrderPlaceRedirectUrl($orderId = 0)
-	{
-	   $params = array();
-       $params['_secure'] = true;
+    {
+        $params = array();
+        $params['_secure'] = true;
        
-	   if ($orderId != 0 && is_numeric($orderId)) {
-	       $params['order_id'] = $orderId;
-	   }
+        if ($orderId != 0 && is_numeric($orderId)) {
+            $params['order_id'] = $orderId;
+        }
        
         return Mage::getUrl('pagseguro/pay/redirect', $params);
     }

@@ -203,7 +203,7 @@
                             <show_in_store>1</show_in_store>
                             <comment>Check documentation to use this option.</comment>
                         </custom_address_model>
-                        <msg_add translate="label, comment">
+                        <message translate="label, comment">
                             <label>Add Message</label>
                             <frontend_type>textarea</frontend_type>
                             <sort_order>50</sort_order>
@@ -211,7 +211,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <comment>This content is displayed when customer is choosing the payment method on checkout.</comment>
-                        </msg_add>
+                        </message>
                         <installments_show translate="label, comment">
                             <label>Show Installment</label>
                             <frontend_type>select</frontend_type>
@@ -324,7 +324,26 @@
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <comment>This feature will be available in next versions of this module.</comment>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <message translate="label, comment">
+                            <label>Add Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This content is displayed when customer is choosing the payment method on checkout.</comment>
+                        </message>
+                    </fields>
                 </pagseguro_api>
             </groups>
         </payment>

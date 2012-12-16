@@ -62,16 +62,16 @@ class OsStudios_PagSeguro_Helper_Data extends OsStudios_PagSeguro_Helper_Visie
             $juros /= 100;
         }
     
-        $msg_extra = "";
+        $msg_extra = '';
     
         $valor_total = $valor_original;
         if ($intervalos == 1 and $parcelas_sem_juros < 1) {
             $valor_parcela = $valor_original;
-            $msg_extra = "Sem juros";
+            $msg_extra = 'Sem juros';
         } else {
             if ($parcelas <= $parcelas_sem_juros or $parcelas_sem_juros < 1) {
                 if ($parcelas_sem_juros > 1) {
-                    $msg_extra = "Sem juros";
+                    $msg_extra = 'Sem juros';
                 }
             } else {
                 if ($juros == 0) {
@@ -102,7 +102,7 @@ class OsStudios_PagSeguro_Helper_Data extends OsStudios_PagSeguro_Helper_Visie
      */
     public function calculateUpfrontPrice($valor_original, $parcelas_sem_juros, $juros = 0.0199) {
     
-        if (preg_match("/^[-+]?[0-9]{1,3}(\.[0-9]{3})*(,[0-9]*)?$/", $valor_original)) {
+        if (preg_match('/^[-+]?[0-9]{1,3}(\.[0-9]{3})*(,[0-9]*)?$/', $valor_original)) {
             $valor_original = str_replace(".", "", $valor_original);
             $valor_original = str_replace(",", ".", $valor_original);
         }
@@ -227,8 +227,26 @@ class OsStudios_PagSeguro_Helper_Data extends OsStudios_PagSeguro_Helper_Visie
      */
     public function log($message)
     {
-    	Mage::getModel('pagseguro/data')->log($message);
+    	Mage::getSingleton('pagseguro/data')->log($message);
     	return $this;
+    }
+    
+    
+    /**
+     * Retrieve information from payment configuration
+     *
+     * @param string $field
+     * @param int|string|null|Mage_Core_Model_Store $storeId
+     *
+     * @return mixed
+     */
+    public function getMethodConfigData($field, $methodCode = OsStudios_PagSeguro_Model_Payment::PAGSEGURO_METHOD_CODE_HPP, $storeId = null)
+    {
+        if (null === $storeId) {
+            $storeId = Mage::app()->getStore();
+        }
+        $path = 'payment/'.$methodCode.'/'.$field;
+        return Mage::getStoreConfig($path, $storeId);
     }
     
     

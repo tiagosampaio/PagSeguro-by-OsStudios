@@ -24,6 +24,9 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
      */
     protected $_order = null;
     
+    const PAGSEGURO_METHOD_CODE_HPP = 'pagseguro_hpp';
+    const PAGSEGURO_METHOD_CODE_API = 'pagseguro_api';
+    
     /**
      * 
      * Status: Complete
@@ -106,7 +109,7 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
      */
     public function log($message)
     {
-    	Mage::getModel('pagseguro/data')->log($message);
+    	Mage::getSingleton('pagseguro/data')->log($message);
     	return $this;
     }
 }

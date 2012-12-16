@@ -136,10 +136,11 @@
              <pagseguro_hpp>
                  <model>OsStudios_PagSeguro_Model_Hpp</model>
                  <active>0</active>
-                 <title>PagSeguro UOL</title>
+                 <title>PagSeguro UOL - HPP</title>
                  <order_status>pending</order_status>
                  <custom_address_model>0</custom_address_model>
-                 <msg_add>You will be redirected to PagSeguro after the order confirmation.</msg_add>
+                 <show_message>1</show_message>
+                 <message>You will be redirected to PagSeguro after the order confirmation.</message>
                  <installments_show>0</installments_show>
                  <installments_add>0</installments_add>
                  <installments_upfront>0</installments_upfront>
@@ -148,6 +149,13 @@
                  <use_return_page_cms>0</use_return_page_cms>
                  <allowspecific>0</allowspecific>
             </pagseguro_hpp>
+             <pagseguro_api>
+                 <model>OsStudios_PagSeguro_Model_Api</model>
+                 <active>0</active>
+                 <title>PagSeguro UOL - API</title>
+                 <show_message>1</show_message>
+                 <message>You will be redirected to PagSeguro after the order confirmation using API features.</message>
+             </pagseguro_api>
         </payment>
     </default>
     <crontab>

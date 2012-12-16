@@ -18,98 +18,98 @@
 abstract class OsStudios_PagSeguro_Model_Returns_Types_Abstract extends OsStudios_PagSeguro_Model_Returns
 {
 	
-	const TABS = '		';
+    const TABS = '		';
 	
-	/**
+    /**
      * Handle the post data
      * 
      * @var (array)
      */
-	protected $_post = null;
+    protected $_post = null;
 	
-	/**
+    /**
      * Handle the parameters used in consults
      * 
      * @var (array)
      */
     protected $_params = array();
 	
-	/**
-	 * Handle the process result
-	 * 
-	 * @var (bool)
-	 */
-	protected $_success = false;
-	
-	/**
-	 * Handle the response result
-	 * 
-	 * @var (mixed)
-	 */
-	protected $_response = null;
-	
-	
-	/**
-	 * Runs before process any return
-	 */
-	protected function _beforeProcessReturn()
-	{
-		
-	}
+    /**
+     * Handle the process result
+     * 
+     * @var (bool)
+     */
+    protected $_success = false;
+
+    /**
+     * Handle the response result
+     * 
+     * @var (mixed)
+     */
+    protected $_response = null;
 	
 	
-	/**
-	 * Runs before process any return
-	 */
-	protected function _afterProcessReturn()
-	{
-		
-	}
+    /**
+     * Runs before process any return
+     */
+    protected function _beforeProcessReturn()
+    {
+        return $this;
+    }
 	
 	
-	/**
-	 * Sets the post data
-	 * 
-	 * @param (mixed) $post
-	 */
-	public function setPostData($post)
-	{
-		$this->_post = $post;
-		$this->setPost($this->_post);
-		return $this;
-	}
+    /**
+     * Runs before process any return
+     */
+    protected function _afterProcessReturn()
+    {
+        return $this;
+    }
 	
 	
-	/**
-	 * Return true if the returned has processed
-	 * 
-	 * @return (bool)
-	 */
-	public function isSuccess()
-	{
-		return $this->_success;
-	}
+    /**
+     * Sets the post data
+     * 
+     * @param (mixed) $post
+     */
+    public function setPostData($post)
+    {
+        $this->_post = $post;
+        $this->setPost($this->_post);
+        return $this;
+    }
 	
 	
-	/**
-	 * Return response of the return
-	 * 
-	 * @return (bool)
-	 */
-	public function getResponse()
-	{
-		return $this->_response;
-	}
+    /**
+     * Return true if the returned has processed
+     * 
+     * @return (bool)
+     */
+    public function isSuccess()
+    {
+        return $this->_success;
+    }
+	
+	
+    /**
+     * Return response of the return
+     * 
+     * @return (bool)
+     */
+    public function getResponse()
+    {
+        return $this->_response;
+    }
     
     
-    /** 
-	 * Process return
-	 * 
-	 * @return OsStudios_PagSeguro_Model_Returns_Types_Abstract
-	 */
-	public function processReturn()
-	{
-		return $this;
-	}
+   /** 
+    * Process return
+    * 
+    * @return OsStudios_PagSeguro_Model_Returns_Types_Abstract
+    */
+    public function processReturn()
+    {
+       return $this;
+    }
     
 }
