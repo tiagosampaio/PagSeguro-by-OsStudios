@@ -34,6 +34,15 @@ class OsStudios_PagSeguro_Controller_Front_Abstract extends Mage_Core_Controller
         return Mage::getSingleton('pagseguro/hpp');
     }
     
+    /**
+     * Return PagSeguro Singleton API Object
+     *
+     * @return OsStudios_PagSeguro_Model_Api
+     */
+    public function getPagSeguroApi()
+    {
+        return Mage::getSingleton('pagseguro/api');
+    }
     
     /**
      * Return Checkout Object

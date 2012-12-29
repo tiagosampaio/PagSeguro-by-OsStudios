@@ -10,8 +10,16 @@ class OsStudios_PagSeguro_Model_Api extends OsStudios_PagSeguro_Model_Payment
     protected $_canUseForMultishipping = false;
     protected $_canCapture = true;
     
-    public function _construct() {
+    public function _construct()
+    {
         parent::_construct();
+        Mage::log('opa', null, '$opa.log');
+    }
+    
+    public function __construct()
+    {
+        $xml = Mage::getSingleton('pagseguro/api_xml')->getXml();
+        Mage::log($xml->asXML(), null, 'baseXml.log');
     }
     
     private function ___requestSendViaXml()
