@@ -239,14 +239,12 @@ class OsStudios_PagSeguro_Model_Api_Xml extends OsStudios_PagSeguro_Model_Abstra
         if($this->getOrder()) {
             foreach($this->getOrder()->getAllVisibleItems() as $item) {
                 $xmlItem = $xmlItems->addChild('item');
-
-                Mage::log($item->debug(), null, '$item.log');
                 
                 $xmlItem->addChild('id', (string) $item->getProductId());
                 $xmlItem->addChild('description', $item->getName());
-                $xmlItem->addChild('amount', $this->_formatNumberToXml(($item->getRowTotal() /  $item->getQty())));
-                $xmlItem->addChild('quantity', (int) $item->getQty());
-                $xmlItem->addChild('shippingCost');
+                $xmlItem->addChild('amount', $this->_formatNumberToXml(($item->getRowTotal() /  $item->getQtyOrdered())));
+                $xmlItem->addChild('quantity', (int) $item->getQtyOrdered());
+                $xmlItem->addChild('shippingCost', '0.00');
                 $xmlItem->addChild('weight', (int) $item->getWeight());
             }
         }
@@ -314,14 +312,13 @@ class OsStudios_PagSeguro_Model_Api_Xml extends OsStudios_PagSeguro_Model_Abstra
      */
     protected function _getNodeShipping()
     {
-        $shipping = $this->getOrder()->getShippingAddress();
-        
-        Mage::log($shipping->debug(), null, '$shipping.log');
-        
         $xmlShipping = $this->_xml->addChild('shipping');
-        $xmlShipping->addChild('cost', $this->_formatNumberToXml($shipping->getShippingAmount()));
         
         if($this->getOrder()) {
+        $shipping = $this->getOrder()->getShippingAddress();
+        
+        $xmlShipping->addChild('cost', $this->_formatNumberToXml($this->getOrder()->getShippingAmount()));
+        
             $xmlShipping->addChild('type', Mage::getStoreConfig('payment/pagseguro_api/shipping_type'));
             $xmlAddress = $xmlShipping->addChild('address');
             
