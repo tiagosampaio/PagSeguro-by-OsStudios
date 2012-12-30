@@ -86,7 +86,7 @@ class OsStudios_PagSeguro_Model_Api_Xml extends OsStudios_PagSeguro_Model_Abstra
         /**
          * Remove......
          */
-        return $this->getQuote();
+        //return $this->getQuote();
         return $this->_order;
     }
     

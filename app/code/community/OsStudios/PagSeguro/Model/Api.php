@@ -10,13 +10,6 @@ class OsStudios_PagSeguro_Model_Api extends OsStudios_PagSeguro_Model_Payment
     protected $_canUseForMultishipping = false;
     protected $_canCapture = true;
     
-    public function __construct()
-    {
-        
-        $this->_registerOrderInPagSeguro();
-        
-    }
-    
     /**
      * Return the URL to be redirected to when finish purchasing
      * 
