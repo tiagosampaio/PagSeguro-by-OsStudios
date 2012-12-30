@@ -55,7 +55,7 @@ class OsStudios_PagSeguro_Block_Api_Info extends Mage_Payment_Block_Info
         $paymentMethod = $this->getInfo()->getPagseguroPaymentMethod();
         
         if ($paymentMethod == 'Boleto' AND $order->getState() == Mage_Sales_Model_Order::STATE_HOLDED) {
-            $paymentMethod .= ' (<a href="' . Mage::getModel('pagseguro/data')->getPagSeguroBoletoUrl($transactionId) . '" onclick="this.target=\'_blank\'">reemitir</a>)';
+            $paymentMethod .= ' (<a href="' . Mage::getSingleton('pagseguro/data')->getPagSeguroBoletoUrl($transactionId) . '" onclick="this.target=\'_blank\'">reemitir</a>)';
         }
 
         $this->addData(array(

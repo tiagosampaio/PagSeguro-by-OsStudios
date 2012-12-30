@@ -270,4 +270,74 @@ class OsStudios_PagSeguro_Helper_Data extends OsStudios_PagSeguro_Helper_Visie
 	    return false; 
     }
     
+    public function cleanStringToXml($string = null)
+    {
+        
+        $chars = array(
+            'a' => array('á', 'à', 'â', 'ã'),
+            'A' => array('Á', 'À', 'Â', 'Ã'),
+            'e' => array('é', 'è', 'ê'),
+            'E' => array('É', 'È', 'Ê'),
+            'i' => array('í', 'ì', 'î'),
+            'I' => array('Í', 'Ì', 'Î'),
+            'o' => array('ó', 'ò', 'ô', 'Õ'),
+            'O' => array('Ó', 'Ò', 'Ô', 'Õ'),
+            'u' => array('ú', 'ù', 'û'),
+            'U' => array('Ú', 'Ù', 'Û'),
+            'c' => array('ç'),
+            'C' => array('Ç'),
+        );
+        
+        foreach($chars as $char => $set) {
+            $string = str_replace($set, $char, $string);
+        }
+        
+        return preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', trim($string));
+    }
+    
+    
+    public function getRegionCode($regionString = null)
+    {
+        $matches = array(
+            array('pattern' => '/^acre$/',                              'result' => 'AC'),
+            array('pattern' => '/^alagoas$/',                           'result' => 'AL'),
+            array('pattern' => '/^amap.?$/',                            'result' => 'AP'),
+            array('pattern' => '/^amazona.?$/',                         'result' => 'AM'),
+            array('pattern' => '/^bahia$/',                             'result' => 'BA'),
+            array('pattern' => '/^cear.?$/',                            'result' => 'CE'),
+            array('pattern' => '/^distrito.?federal$/',                 'result' => 'DF'),
+            array('pattern' => '/^esp.?rito.?santo$/',                  'result' => 'ES'),
+            array('pattern' => '/^goi.?s$/',                            'result' => 'GO'),
+            array('pattern' => '/^maranh.?o$/',                         'result' => 'MA'),
+            array('pattern' => '/^mato.?grosso$/',                      'result' => 'MT'),
+            array('pattern' => '/^mato.?grosso.?do.?sul$/',             'result' => 'MS'),
+            array('pattern' => '/^minas.?gerais$/',                     'result' => 'MG'),
+            array('pattern' => '/^par.?$/',                             'result' => 'PA'),
+            array('pattern' => '/^para.?ba$/',                          'result' => 'PB'),
+            array('pattern' => '/^paran.?$/',                           'result' => 'PR'),
+            array('pattern' => '/^pernambuco$/',                        'result' => 'PE'),
+            array('pattern' => '/^piau.?$/',                            'result' => 'PI'),
+            array('pattern' => '/^rio.?de.?janeiro$/',                  'result' => 'RJ'),
+            array('pattern' => '/^rio.?grande.?do.?norte$/',            'result' => 'RN'),
+            array('pattern' => '/^rio.?grande.?do.?sul$/',              'result' => 'RS'),
+            array('pattern' => '/^rond.?nia$/',                         'result' => 'RO'),
+            array('pattern' => '/^roraima$/',                           'result' => 'RR'),
+            array('pattern' => '/^santa.?catarina$/',                   'result' => 'SC'),
+            array('pattern' => '/^s.?o.?paulo$/',                       'result' => 'SP'),
+            array('pattern' => '/^sergipe$/',                           'result' => 'SE'),
+            array('pattern' => '/^tocantins$/',                         'result' => 'TO'),
+        );
+        
+        if(($regionString = trim(strtolower($regionString)))) {
+            foreach($matches as $match) {
+                if(preg_match($match['pattern'], $regionString)) {
+                    return strtoupper($match['result']);
+                    break;
+                }
+            }
+            
+            return 'SP';
+        }
+    }
+    
 }

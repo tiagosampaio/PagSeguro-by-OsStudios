@@ -121,6 +121,8 @@
          <payment>
              <pagseguro_config>
              	 <pagseguro_url>https://pagseguro.uol.com.br/security/webpagamentos/webpagto.aspx</pagseguro_url>
+                 <pagseguro_api_url>https://ws.pagseguro.uol.com.br/v2/checkout</pagseguro_api_url>
+                 <pagseguro_api_redirect_url>https://pagseguro.uol.com.br/v2/checkout/payment.html</pagseguro_api_redirect_url>
                  <pagseguro_npi_url>https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml</pagseguro_npi_url>
                  <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml</pagseguro_billet_url>
                  <pagseguro_transactions_url>https://ws.pagseguro.uol.com.br/v2/transactions</pagseguro_transactions_url>
@@ -155,6 +157,10 @@
                  <title>PagSeguro UOL - API</title>
                  <show_message>1</show_message>
                  <message>You will be redirected to PagSeguro after the order confirmation using API features.</message>
+                 <max_uses>100</max_uses>
+                 <max_age>3600</max_age>
+                 <extra_amount>0.00</extra_amount>
+                 <shipping_type>1</shipping_type>
              </pagseguro_api>
         </payment>
         <api_error_codes>

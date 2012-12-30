@@ -115,7 +115,7 @@ class OsStudios_PagSeguro_Model_Hpp extends OsStudios_PagSeguro_Model_Payment
     public function createRedirectForm()
     {
     	$form = new Varien_Data_Form();
-        $form->setAction(Mage::getModel('pagseguro/data')->getPagSeguroUrl())
+        $form->setAction(Mage::getSingleton('pagseguro/data')->getPagSeguroUrl())
             ->setId('pagseguro_checkout')
             ->setName('pagseguro_checkout')
             ->setMethod('POST')

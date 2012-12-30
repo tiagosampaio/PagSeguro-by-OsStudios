@@ -80,7 +80,7 @@ class OsStudios_PagSeguro_Block_Success extends Mage_Core_Block_Template
                     'print_url' => $this->getUrl('sales/order/print', array('order_id'=> $orderId)),
                     'pagseguro_transaction_id'  => $order->getPayment()->getPagseguroTransactionId(),
                     'pagseguro_payment_method'  => $order->getPayment()->getPagseguroPaymentMethod(),
-                    'pagseguro_boleto_url'  => Mage::getModel('pagseguro/data')->getPagSeguroBoletoUrl($order->getPayment()->getPagseguroTransactionId()),
+                    'pagseguro_boleto_url'  => Mage::getSingleton('pagseguro/data')->getPagSeguroBoletoUrl($order->getPayment()->getPagseguroTransactionId()),
                     'pagseguro_payment_url'  => $this->getPagSeguro()->getOrderPlaceRedirectUrl($order->getId()),
                 ));
             }

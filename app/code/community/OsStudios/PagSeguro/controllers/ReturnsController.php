@@ -59,7 +59,7 @@ class OsStudios_PagSeguro_ReturnsController extends OsStudios_PagSeguro_Controll
         if (($post = $request->getPost()) && $request->isPost()) {
             
             $returns = Mage::getModel('pagseguro/returns');
-            $data = Mage::getModel('pagseguro/data');
+            $data = Mage::getSingleton('pagseguro/data');
             
             if($data->isReturnApi($post)) {
                 /**

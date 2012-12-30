@@ -16,22 +16,21 @@
  */
 
 /**
- * PagSeguro Adminhtml Returns Controller
+ * PagSeguro Shipping Type Source
  *
  */
 
-class OsStudios_PagSeguro_Adminhtml_ReturnsController extends Mage_Adminhtml_Controller_Action
+class OsStudios_PagSeguro_Model_System_Config_Source_Shipping_Type
 {
-    
-    public function updatesAction()
-    {
-        $model = Mage::getSingleton('pagseguro/data');
+	public function toOptionArray ()
+	{
+            $options = array();
+        
+            $options[] = array('value' => '1', 'label' => 'Encomenda normal (PAC).');
+            $options[] = array('value' => '2', 'label' => 'SEDEX');
+            $options[] = array('value' => '3', 'label' => 'Tipo de frete não especificado.');
+        
+            return $options;
+	}
 
-        $returns = Mage::getModel('pagseguro/returns');
-        $returns->setReturnType(OsStudios_PagSeguro_Model_Returns::PAGSEGURO_RETURN_TYPE_CONSULT)
-                ->runReturns();
-
-        $this->_redirect('adminhtml/sales_order/');
-    }
-    
 }

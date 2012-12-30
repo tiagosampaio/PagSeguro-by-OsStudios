@@ -19,10 +19,17 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
 {
     /**
      * 
-     * Current order
+     * Current Order
      * @var Mage_Sales_Model_Order
      */
     protected $_order = null;
+    
+    /**
+     * 
+     * Current Quote
+     * @var Mage_Sales_Model_Quote
+     */
+    protected $_quote = null;
     
     const PAGSEGURO_METHOD_CODE_HPP = 'pagseguro_hpp';
     const PAGSEGURO_METHOD_CODE_API = 'pagseguro_api';
@@ -71,6 +78,35 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
     
     
     /**
+     *  Return Quote Object
+     *
+     *  @return	  Mage_Sales_Model_Order
+     */
+    public function getQuote()
+    {
+        if ($this->_quote == null) {
+            if(!$this->_quote = Mage::getSingleton('checkout/session')->getQuote()) {
+                return false;
+            }
+        }
+        return $this->_quote;
+    }
+	
+    
+    /**
+     * 
+     *  Set Current Quote Object
+     *
+     *  @param Mage_Sales_Model_Quote $quote
+     */
+    public function setQuote(Mage_Sales_Model_Quote $quote)
+    {
+        $this->_quote = $quote;
+        return $this;
+    }
+    
+    
+    /**
      *  Return Order
      *
      *  @return	  Mage_Sales_Model_Order
@@ -78,7 +114,9 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
     public function getOrder()
     {
         if ($this->_order == null) {
-        	return false;
+            if(!$this->_order = Mage::getSingleton('checkout/session')->getOrder()) {
+                return false;
+            }
         }
         return $this->_order;
     }
@@ -92,10 +130,7 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
      */
     public function setOrder(Mage_Sales_Model_Order $order)
     {
-    	if(!$this->_order)
-    	{
-    		$this->_order = $order;
-    	}
+        $this->_order = $order;
         return $this;
     }
     
@@ -112,4 +147,5 @@ abstract class OsStudios_PagSeguro_Model_Payment extends Mage_Payment_Model_Meth
     	Mage::getSingleton('pagseguro/data')->log($message);
     	return $this;
     }
+    
 }

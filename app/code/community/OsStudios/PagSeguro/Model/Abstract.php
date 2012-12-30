@@ -93,7 +93,7 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
     public function getStore()
     {
     	if(!$this->_store) {
-    		$this->_store = Mage::app()->getStore(); 
+            $this->_store = Mage::app()->getStore(); 
     	}
     	return $this->_store;
     }
@@ -108,7 +108,39 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
     {
         $url = $this->getConfigData('pagseguro_url');
     	if(!$url) {
-    		Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro URL could not be retrieved.') );
+            Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro URL could not be retrieved.') );
+    	}
+    	
+    	return $url;
+    }
+    
+    
+    /**
+     * Returns the URL for API payments on PagSeguro
+     * 
+     * @return string
+     */ 
+    public function getPagSeguroApiUrl()
+    {
+        $url = $this->getConfigData('pagseguro_api_url');
+    	if(!$url) {
+            Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro API URL could not be retrieved.') );
+    	}
+    	
+    	return $url;
+    }
+    
+    
+    /**
+     * Returns the URL for API redirect to PagSeguro
+     * 
+     * @return string
+     */ 
+    public function getPagSeguroApiRedirectUrl()
+    {
+        $url = $this->getConfigData('pagseguro_api_redirect_url');
+    	if(!$url) {
+            Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro API Redirect URL could not be retrieved.') );
     	}
     	
     	return $url;
@@ -124,7 +156,7 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
     {
         $url = $this->getConfigData('pagseguro_npi_url');
     	if(!$url) {
-    		Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro NPI URL could not be retrieved.') );
+            Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro NPI URL could not be retrieved.') );
     	}
     	return $url;
     }
@@ -140,7 +172,7 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
     {
         $url = $this->getConfigData('pagseguro_billet_url');
     	if(!$url) {
-    		Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro Billet URL could not be retrieved.') );
+            Mage::throwException( Mage::helper('pagseguro')->__('The PagSeguro Billet URL could not be retrieved.') );
     	}
     	
         $url .= '?resizeBooklet=n&code=' . $transactionId;
@@ -158,11 +190,11 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
 	 */
 	public function getPagSeguroTransactionsUrl()
 	{
-		$url = $this->getConfigData('pagseguro_transactions_url');
-		if(!$url) {
-			Mage::throwException(Mage::helper('pagseguro')->__('Unable to retrieve transactions URL from module configuration.'));
-		}
-		return $url;
+            $url = $this->getConfigData('pagseguro_transactions_url');
+            if(!$url) {
+                Mage::throwException(Mage::helper('pagseguro')->__('Unable to retrieve transactions URL from module configuration.'));
+            }
+            return $url;
 	}
     
 	
@@ -173,10 +205,10 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
 	 */
 	protected function getCredentials()
 	{
-		if(!$this->_credentials) {
-			$this->_credentials = Mage::getModel('pagseguro/credentials');
-		}
-		return $this->_credentials;
+            if(!$this->_credentials) {
+                $this->_credentials = Mage::getSingleton('pagseguro/credentials');
+            }
+            return $this->_credentials;
 	}
 	
 	
@@ -187,7 +219,7 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
 	 */
 	protected function helper()
 	{
-		return Mage::helper('pagseguro');
+            return Mage::helper('pagseguro');
 	}
 	
 	
@@ -198,10 +230,10 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
 	 */
 	protected function __($string)
 	{
-		$args = func_get_args();
-        $expr = new Mage_Core_Model_Translate_Expr(array_shift($args), 'pagseguro');
-        array_unshift($args, $expr);
-        return Mage::app()->getTranslator()->translate($args);
+            $args = func_get_args();
+            $expr = new Mage_Core_Model_Translate_Expr(array_shift($args), 'pagseguro');
+            array_unshift($args, $expr);
+            return Mage::app()->getTranslator()->translate($args);
 	}
 	
 	protected function _redirect($path = '', $params = array())
@@ -237,18 +269,18 @@ abstract class OsStudios_PagSeguro_Model_Abstract extends Mage_Core_Model_Abstra
 	 */
 	protected function isLogTypeAllowed($type = null)
 	{
-		if(!$this->_allowedLogTypes)
-		{
-			$data = $this->getConfigData('log_types');
-			$data = explode(',', $data);
-			$this->_allowedLogTypes = $data;
-		}
-		
-		if($this->_allowedLogTypes) {
-			return in_array($type, $this->_allowedLogTypes);
-		} else {
-			return null;
-		}
+            if(!$this->_allowedLogTypes)
+            {
+                $data = $this->getConfigData('log_types');
+                $data = explode(',', $data);
+                $this->_allowedLogTypes = $data;
+            }
+
+            if($this->_allowedLogTypes) {
+                return in_array($type, $this->_allowedLogTypes);
+            } else {
+                return null;
+            }
 	}
         
 }

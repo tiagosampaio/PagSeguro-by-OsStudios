@@ -10,36 +10,58 @@ class OsStudios_PagSeguro_Model_Api extends OsStudios_PagSeguro_Model_Payment
     protected $_canUseForMultishipping = false;
     protected $_canCapture = true;
     
-    public function _construct()
-    {
-        parent::_construct();
-        Mage::log('opa', null, '$opa.log');
-    }
-    
     public function __construct()
     {
-        $xml = Mage::getSingleton('pagseguro/api_xml')->getXml();
-        Mage::log($xml->asXML(), null, 'baseXml.log');
+        
+        $this->_registerOrderInPagSeguro();
+        
     }
     
-    private function ___requestSendViaXml()
+    /**
+     * Return the URL to be redirected to when finish purchasing
+     * 
+     * @return boolean | string
+     */
+    public function getOrderPlaceRedirectUrl()
     {
-        $url = 'https://ws.pagseguro.uol.com.br/v2/checkout?email=thiko_38@hotmail.com&token=35EA3CABB6F243059A87B8053FB4905D';
-        $xml = file_get_contents('../../pagseguro.xml');
+        if(is_array(($result = $this->_registerOrderInPagSeguro()))) {
+            $url = sprintf('%s?code=%s', Mage::getSingleton('pagseguro/data')->getPagSeguroApiRedirectUrl(), $result['code']);
+            return $url;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Register the payment in PagSeguro before redirect
+     * 
+     * @return boolean | array
+     */
+    protected function _registerOrderInPagSeguro()
+    {
+        $credentials = Mage::getSingleton('pagseguro/credentials');
+        $url = sprintf('%s?email=%s&token=%s', Mage::getSingleton('pagseguro/data')->getPagSeguroApiUrl(), $credentials->getAccountEmail(), $credentials->getToken());
+        
+        $xml = Mage::getSingleton('pagseguro/api_xml')->getXml();
+        
+        Mage::log($xml->asXML(), null, '$xml.log');
+        Mage::log($xml->asXML(), null, '$xml.log');
         
         $client = new Zend_Http_Client($url);
         $client->setMethod(Zend_Http_Client::POST)
                ->setHeaders('Content-Type: application/xml; charset=ISO-8859-1')
-               ->setRawData($xml, 'text/xml');
-
+               ->setRawData($xml->asXML(), 'text/xml');
+        
         $request = $client->request();
-        $body = $request->getBody();
+        $body = new Varien_Simplexml_Config($request->getBody());
         
-        Mage::log($body, null, '$body.log');
+        $result = $body->getNode()->asArray();
         
-        $result = new Varien_Simplexml_Config($body);
+        if($result['code'] && $result['date']) {
+            return $result;
+        }
         
-        Mage::log($result->getNode()->asArray(), null, '$result.log');
+        return false;
     }
     
 }
