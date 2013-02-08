@@ -96,13 +96,40 @@ class OsStudios_PagSeguro_PayController extends OsStudios_PagSeguro_Controller_F
         }
     }
     
-    
+
     /**
      * Shows success page after payment.
      * 
      */
     public function successAction()
     {
+        $session = $this->getOnepage()->getCheckout();
+        if (!$session->getLastSuccessQuoteId()) {
+            $this->_redirect('checkout/cart');
+            return;
+        }
+
+        $lastQuoteId = $session->getLastQuoteId();
+        $lastOrderId = $session->getLastOrderId();
+        $lastRecurringProfiles = $session->getLastRecurringProfileIds();
+        if (!$lastQuoteId || (!$lastOrderId && empty($lastRecurringProfiles))) {
+            $this->_redirect('checkout/cart');
+            return;
+        }
+
+        //$session->clear();
+        Mage::dispatchEvent('osstudios_pagseguro_controller_success_action', array('order_ids' => array($lastOrderId)));
+
+        if ($this->getPagSeguro()->getConfigData('use_return_page_cms', Mage::app()->getStore()->getId())) {
+            $this->_redirect($this->getPagSeguro()->getConfigData('return_page', Mage::app()->getStore()->getId()));
+            return;
+        }
+
+        $this->loadLayout();
+        $this->_initLayoutMessages('checkout/session');
+        $this->renderLayout();
+
+/*
         $orderId = $this->getRequest()->getParam('order_id');
         if (!empty($orderId)) {
             Mage::getSingleton("core/session")->setPagseguroOrderId($orderId);
@@ -130,6 +157,7 @@ class OsStudios_PagSeguro_PayController extends OsStudios_PagSeguro_Controller_F
         } else {
             $this->_redirect('');
         }
+*/
     }
     
 

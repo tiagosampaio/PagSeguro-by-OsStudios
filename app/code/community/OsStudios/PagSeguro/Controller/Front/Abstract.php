@@ -63,4 +63,14 @@ class OsStudios_PagSeguro_Controller_Front_Abstract extends Mage_Core_Controller
         return Mage::getModel('sales/order')->load($orderId)->getStoreId();
     }
     
+    /**
+     * Get one page checkout model
+     *
+     * @return Mage_Checkout_Model_Type_Onepage
+     */
+    public function getOnepage()
+    {
+        return Mage::getSingleton('checkout/type_onepage');
+    }
+    
 }

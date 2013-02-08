@@ -101,7 +101,7 @@
         <layout>
             <updates>
                 <pagseguro>
-                    <file>osstudios_pagseguro.xml</file>
+                    <file>osstudios/pagseguro.xml</file>
                 </pagseguro>
             </updates>
         </layout>
@@ -161,6 +161,8 @@
                  <max_age>3600</max_age>
                  <extra_amount>0.00</extra_amount>
                  <shipping_type>1</shipping_type>
+                 <payment_action>authorize</payment_action>
+                 <debug>1</debug>
              </pagseguro_api>
         </payment>
         <api_error_codes>
