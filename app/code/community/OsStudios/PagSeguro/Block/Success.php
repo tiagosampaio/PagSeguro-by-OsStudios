@@ -81,8 +81,6 @@ class OsStudios_PagSeguro_Block_Success extends Mage_Core_Block_Template
                 
             	$isVisible = !in_array($order->getState(), Mage::getSingleton('sales/order_config')->getInvisibleOnFrontStates());
                 $isHolded = (boolean) ($order->getState() == Mage_Sales_Model_Order::STATE_HOLDED);
-                
-                Mage::log($order->getPayment()->debug(), null, '$order.log');
 
                 $this->addData(array(
                     'order_id'  => $order->getIncrementId(),

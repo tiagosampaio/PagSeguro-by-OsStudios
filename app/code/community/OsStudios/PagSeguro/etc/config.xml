@@ -151,6 +151,7 @@
                  <use_return_page_cms>0</use_return_page_cms>
                  <allowspecific>0</allowspecific>
             </pagseguro_hpp>
+            <!--
              <pagseguro_api>
                  <model>OsStudios_PagSeguro_Model_Api</model>
                  <active>0</active>
@@ -164,6 +165,7 @@
                  <payment_action>authorize</payment_action>
                  <debug>1</debug>
              </pagseguro_api>
+            -->
         </payment>
         <api_error_codes>
             <code_11001>receiverEmail is required.</code_11001>
