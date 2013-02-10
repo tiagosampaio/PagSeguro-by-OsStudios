@@ -24,7 +24,18 @@ class OsStudios_PagSeguro_Block_Success extends Mage_Core_Block_Template
 {
 
     /**
+     * Sets the template
+     *
+     */
+    public function _construct()
+    {
+        $this->setTemplate('osstudios/pagseguro/success.phtml');
+        return parent::_construct();
+    }
+
+    /**
      * Init Infos and Prepare for Output
+     *
      */
     protected function _beforeToHtml()
     {
@@ -57,10 +68,11 @@ class OsStudios_PagSeguro_Block_Success extends Mage_Core_Block_Template
 
     /**
      * Get Session Order ID, load it and check if it can be viewed, printed, etc.
+     * 
      */
     protected function _prepareOrder()
     {
-        $orderId = Mage::getSingleton('core/session')->getPagseguroOrderId();
+        $orderId = Mage::registry('osstudios_pagseguro_last_order_id');
         if ($orderId) {
             
         	$order = Mage::getModel('sales/order')->load($orderId);
@@ -70,6 +82,8 @@ class OsStudios_PagSeguro_Block_Success extends Mage_Core_Block_Template
             	$isVisible = !in_array($order->getState(), Mage::getSingleton('sales/order_config')->getInvisibleOnFrontStates());
                 $isHolded = (boolean) ($order->getState() == Mage_Sales_Model_Order::STATE_HOLDED);
                 
+                Mage::log($order->getPayment()->debug(), null, '$order.log');
+
                 $this->addData(array(
                     'order_id'  => $order->getIncrementId(),
                     'is_order_visible' => $isVisible,

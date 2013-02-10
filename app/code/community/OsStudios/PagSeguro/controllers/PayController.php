@@ -120,6 +120,8 @@ class OsStudios_PagSeguro_PayController extends OsStudios_PagSeguro_Controller_F
         //$session->clear();
         Mage::dispatchEvent('osstudios_pagseguro_controller_success_action', array('order_ids' => array($lastOrderId)));
 
+        Mage::register('osstudios_pagseguro_last_order_id', $lastOrderId);
+        
         if ($this->getPagSeguro()->getConfigData('use_return_page_cms', Mage::app()->getStore()->getId())) {
             $this->_redirect($this->getPagSeguro()->getConfigData('return_page', Mage::app()->getStore()->getId()));
             return;
@@ -128,6 +130,8 @@ class OsStudios_PagSeguro_PayController extends OsStudios_PagSeguro_Controller_F
         $this->loadLayout();
         $this->_initLayoutMessages('checkout/session');
         $this->renderLayout();
+
+        Mage::unregister('osstudios_pagseguro_last_order_id');
 
 /*
         $orderId = $this->getRequest()->getParam('order_id');
