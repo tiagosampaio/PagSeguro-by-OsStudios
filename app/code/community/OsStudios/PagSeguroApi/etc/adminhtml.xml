@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Os Studios PagSeguro Api Payment Module
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   OsStudios
+ * @package    OsStudios_PagSeguroApi
+ * @copyright  Copyright (c) 2013 Os Studios (www.osstudios.com.br)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
+ */
+-->
+
+<config>
+    <!--
+    <menu>
+    	<sales>
+    		<children>
+    			<pagseguro translate="title" module="pagseguroapi">
+                    <title>PagSeguroApi</title>
+                    <sort_order>1000</sort_order>
+                    <children>
+                    	<update_check translate="title" module="pagseguroapi">
+                    		<title>Check for Order Updates</title>
+                    		<action>pagseguro/adminhtml_returns/updates</action>
+                    		<sort_order>0</sort_order>
+                    	</update_check>
+                    </children>
+                </pagseguro>
+    		</children>
+    	</sales>
+    </menu>
+    -->
+    <acl>
+    	<resources>
+    		<admin>
+    			<children>
+    				<system>
+    					<children>
+                            <config>
+                                <children>
+                                	<payment>
+                                		<children>
+		                                	<pagseguroapi translate="title" module="pagseguroapi">
+		                                		<title>PagSeguroApi Configurations</title>
+		                                	</pagseguroapi>
+		                           		</children>
+                                	</payment>
+                                </children>
+                        	</config>
+						</children>
+    				</system>
+                    <!--
+    				<sales>
+    					<children>
+    						<pagseguroapi translate="title" module="pagseguroapi">
+    							<title>PagSeguro</title>
+    							<sort_order>0</sort_order>
+    							<children>
+    								<update_check translate="title">
+    									<title>Check for Order Updates</title>
+										<sort_order>0</sort_order>    									
+    								</update_check>
+    							</children>
+    						</pagseguroapi>
+    					</children>
+    				</sales>
+                    -->
+    			</children>
+    		</admin>
+    	</resources>
+    </acl>
+</config>
