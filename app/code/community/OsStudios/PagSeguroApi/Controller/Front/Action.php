@@ -24,6 +24,33 @@
 class OsStudios_PagSeguroApi_Controller_Front_Action extends Mage_Core_Controller_Front_Action
 {
     
+    /**
+     * Return Checkout Object
+     *
+     * @return Mage_Checkout_Model_Session
+     */
+    public function getCheckout()
+    {
+        return Mage::getSingleton('checkout/session');
+    }
     
+    
+    /**
+     * Return Order's Store ID
+     * 
+     */
+    function getOrderStoreId($orderId) {
+        return Mage::getModel('sales/order')->load($orderId)->getStoreId();
+    }
+    
+    /**
+     * Get one page checkout model
+     *
+     * @return Mage_Checkout_Model_Type_Onepage
+     */
+    public function getOnepage()
+    {
+        return Mage::getSingleton('checkout/type_onepage');
+    }
     
 }

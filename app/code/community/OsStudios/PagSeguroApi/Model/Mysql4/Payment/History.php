@@ -15,9 +15,9 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguroApi_Model_Data extends OsStudios_PagSeguroApi_Model_Abstract
+class OsStudios_PagSeguroApi_Model_Mysql4_Payment_History extends OsStudios_PagSeguroApi_Model_Resource_Payment_History
 {
 
-	
+    
 
 }

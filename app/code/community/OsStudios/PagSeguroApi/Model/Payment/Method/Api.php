@@ -15,7 +15,7 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSeguro_Model_Payment
+class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSeguroApi_Model_Payment
 {
     
     protected $_code = self::PAGSEGURO_METHOD_CODE_API;
@@ -29,7 +29,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
     protected $_isGateway               = true;
     protected $_canOrder                = true;
     
-    protected $_resultCodeRegistry      = 'pagseguroapi_result_code';
+    protected $_transactionCodeRegistry = 'pagseguroapi_transaction_code';
 
     /**
      * Return the URL to be redirected to when finish purchasing
@@ -38,21 +38,23 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
      */
     public function getOrderPlaceRedirectUrl($orderId = null)
     {
-        return Mage::getUrl('pagseguroapi/pay/success');
+        if($this->helper()->openPagSeguroInOtherPage()) {
+            return Mage::getUrl('pagseguroapi/pay/success');
+        } else {
+            $_code = Mage::registry($this->_transactionCodeRegistry);
 
-        $_code = Mage::registry($this->_resultCodeRegistry);
-
-        if($this->_isValidPagSeguroResultCode($_code)) {
-            $url = sprintf('%s?code=%s', $this->getConfigData('pagseguro_api_redirect_url'), $_code);
-            Mage::unregister($this->_resultCodeRegistry);
-            return $url;
+            if($this->_isValidPagSeguroResultCode($_code)) {
+                $url = sprintf('%s?code=%s', $this->getConfigData('pagseguro_api_redirect_url'), $_code);
+                Mage::unregister($this->_transactionCodeRegistry);
+                return $url;
+            }
         }
-        
+
         return false;
     }
     
     /**
-     * Authorize payment abstract method
+     * Authorize payment and creates a new order request in PagSeguro via Api method
      *
      * @param Varien_Object $payment
      * @param float $amount
@@ -62,10 +64,10 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
     public function authorize(Varien_Object $payment, $amount)
     {
         if (!$this->canAuthorize()) {
-            Mage::throwException(Mage::helper('payment')->__('Authorize action is not available.'));
+            Mage::throwException($this->helper()->__('Authorize action is not available.'));
         }
 
-        $url = sprintf('%s?email=%s&token=%s', $this->getConfigData('pagseguro_api_url'), $this->getConfigData('account_email'), $this->getConfigData('account_token'));
+        $url = sprintf('%s?email=%s&token=%s', $this->getConfigData('pagseguro_api_url'), $this->_getAccountEmail(), $this->_getAccountToken());
 
         $xml = Mage::getSingleton('pagseguroapi/payment_method_api_xml')->setOrder($this->_getOrder())->getXml();
 
@@ -76,8 +78,8 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         
         $request = $client->request();
 
-        if(!Mage::helper('pagseguro')->isXml($request->getBody())) {
-            Mage::log(Mage::helper('pagseguro')->__("When the system tried to authorize with login '%s' and token '%s' got '%s' as result.", $credentials->getAccountEmail(), $credentials->getToken(), $request->getBody()), null, 'osstudios_pagseguro_unauthorized.log');
+        if(!$this->helper()->isXml($request->getBody())) {
+            Mage::log($this->helper()->__("When the system tried to authorize with login '%s' and token '%s' got '%s' as result.", $credentials->getAccountEmail(), $credentials->getToken(), $request->getBody()), null, 'osstudios_pagseguro_unauthorized.log');
             Mage::throwException('A problem has occured while trying to authorize the transaction in PagSeguro.');
         }
 
@@ -85,15 +87,18 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
 
         $result = $body->getNode()->asArray();
 
-        Mage::log($xml, null, '$xml.log');
-        Mage::log($body, null, '$body.log');
-        Mage::throwException('Opa! Agora não...');
-
         if((!$result['code'] || !$this->_isValidPagSeguroResultCode($result['code'])) || !$result['date']) {
-            Mage::throwException(Mage::helper('pagseguro')->__('Your payment could not be processed by PagSeguro.'));
+            Mage::throwException($this->helper()->__('Your payment could not be processed by PagSeguro.'));
         }
 
-        Mage::register($this->_resultCodeRegistry, $result['code']);
+        Mage::register($this->_transactionCodeRegistry, $result['code']);
+
+        $history = Mage::getModel('pagseguroapi/payment_history');
+        $history->setOrderId($this->_getOrder()->getId())
+                ->setOrderIncrementId($this->_getOrder()->getRealOrderId())
+                ->setPagseguroTransactionId($result['code'])
+                ->setPagseguroTransactionDate($result['date'])
+                ->save();
 
         return $this;
     }
@@ -105,7 +110,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
      */
     protected function _getOrder()
     {
-        return Mage::getModel('sales/order')->loadByIncrementId($this->_getOrderId());
+        return Mage::getModel('sales/order')->loadByIncrementId($this->_getOrderIncrementId());
     }
     
     /**
@@ -113,7 +118,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
      *
      * @return string
      */
-    private function _getOrderId()
+    private function _getOrderIncrementId()
     {
         $info = $this->getInfoInstance();
 
@@ -156,6 +161,26 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         }
 
         return false;
+    }
+
+    /**
+     * Provides the Account Email of the config
+     *
+     * @return (string)
+     */
+    private function _getAccountEmail()
+    {
+        return $this->getConfigData('account_email');
+    }
+
+    /**
+     * Provides the Account Token of the config
+     *
+     * @return (string)
+     */
+    private function _getAccountToken()
+    {
+        return $this->getConfigData('account_token');
     }
     
 }

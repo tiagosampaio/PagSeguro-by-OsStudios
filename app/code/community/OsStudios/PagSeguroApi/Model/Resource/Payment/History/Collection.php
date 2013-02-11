@@ -15,9 +15,17 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguroApi_Model_Data extends OsStudios_PagSeguroApi_Model_Abstract
+class OsStudios_PagSeguroApi_Model_Resource_Payment_History_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
 
-	
+    protected function _construct()
+    {
+        $this->_init('pagseguroapi/payment_history');
+    }
+
+    protected function _afterLoad()
+    {
+    	parent::_afterLoad();
+    }
 
 }

@@ -339,5 +339,20 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
             return 'SP';
         }
     }
+
+    /**
+     * Whether the PagSeguro must be opened in other page
+     *
+     * @return (boolean)
+     */
+    public function openPagSeguroInOtherPage()
+    {
+        return (bool) Mage::getStoreConfigFlag('payment/pagseguro_api/open_in_other_page');
+    }
+
+    public function getPagSeguroRedirectUrl()
+    {
+        return Mage::getStoreConfig('payment/pagseguro_api/pagseguro_api_redirect_url');
+    }
     
 }

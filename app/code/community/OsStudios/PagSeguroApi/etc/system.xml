@@ -61,10 +61,19 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+                        <order_status translate="label">
+                            <label>New Orders Status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_new</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
                         <account_email translate="label">
                             <label>PagSeguro Account E-mail</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>30</sort_order>
+                            <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -73,7 +82,7 @@
                         <account_token translate="label, comment">
                             <label>Token</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>40</sort_order>
+                            <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -82,7 +91,7 @@
                         <max_uses translate="label, comment">
                             <label>Max Uses</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>50</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -92,7 +101,7 @@
                         <max_age translate="label, comment">
                             <label>Max Age (Seconds)</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>60</sort_order>
+                            <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -102,7 +111,7 @@
                         <extra_amount translate="label, comment">
                             <label>Extra Amount</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>70</sort_order>
+                            <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -113,7 +122,7 @@
                             <label>Shipping Method (PagSeguro)</label>
                             <frontend_type>select</frontend_type>
                             <source_model>pagseguroapi/system_config_source_shipping_type</source_model>
-                            <sort_order>80</sort_order>
+                            <sort_order>90</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -122,12 +131,22 @@
                         <message translate="label, comment">
                             <label>Add Message</label>
                             <frontend_type>textarea</frontend_type>
-                            <sort_order>90</sort_order>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <comment>This content is displayed when customer is choosing the payment method on checkout.</comment>
                         </message>
+                        <open_in_other_page translate="label, comment">
+                            <label>Open PagSeguro in Other Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If is set to true the PagSeguro page will be opened in other page and the current page will be the success page.</comment>
+                        </open_in_other_page>
                     </fields>
                 </pagseguro_api>
         	</groups>

@@ -36,6 +36,17 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
 
     protected function _prepareInfo()
     {
-        
+        $order = $this->getInfo()->getOrder();
+        $payment = $order->getPayment();
+        $pagseguroInfo = $payment->getPagseguroInfo();
+    }
+
+    public function getShowInfo()
+    {
+        if($this->getInfo()->getPagseguroInfo()) {
+            return true;
+        }
+
+        return false;
     }
 }

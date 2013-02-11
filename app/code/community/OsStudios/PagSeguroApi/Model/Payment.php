@@ -1,6 +1,6 @@
 <?php
 /**
- * Os Studios PagSeguro Payment Module
+ * Os Studios PagSeguro Api Payment Module
  *
  * NOTICE OF LICENSE
  *
@@ -145,6 +145,16 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
     {
     	Mage::getSingleton('pagseguro/data')->log($message);
     	return $this;
+    }
+
+    /**
+     * Provide Helper to children classes
+     *
+     * @return OsStudios_PagSeguroApi_Helper_Data
+     */
+    public function helper()
+    {
+        return Mage::helper('pagseguroapi');
     }
     
 }

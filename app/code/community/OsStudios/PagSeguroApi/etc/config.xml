@@ -43,9 +43,9 @@
             	<class>OsStudios_PagSeguroApi_Model_Resource</class>
                 <deprecatedNode>osstudios_pagseguroapi_mysql4</deprecatedNode>
                 <entities>
-                    <orders_data>
-                        <table>osstudios_pagseguroapi_orders_data</table>
-                    </orders_data>
+                    <payment_history>
+                        <table>osstudios_pagseguroapi_payment_history</table>
+                    </payment_history>
                 </entities>
             </osstudios_pagseguroapi_resource>
         </models>
@@ -56,6 +56,17 @@
                 </setup>
             </pagseguroapi_setup>
         </resources>
+        <events>
+            <sales_order_load_after>
+                <observers>
+                    <osstudios_pagseguroapi_sales_order_payment_load_after>
+                        <type>model</type>
+                        <class>pagseguroapi/observer</class>
+                        <method>salesOrderPaymentLoadAfter</method>
+                    </osstudios_pagseguroapi_sales_order_payment_load_after>
+                </observers>
+            </sales_order_load_after>
+        </events>
     </global>
     <admin>
         <routers>
@@ -121,6 +132,7 @@
     			<model>OsStudios_PagSeguroApi_Model_Payment_Method_Api</model>
 				<active>0</active>
 				<title>PagSeguro UOL - API</title>
+                <order_status>pending</order_status>
 				<show_message>1</show_message>
 				<message>You will be redirected to PagSeguro after the order confirmation using API features.</message>
 				<max_uses>100</max_uses>
@@ -130,6 +142,8 @@
 				<payment_action>authorize</payment_action>
 				<pagseguro_api_url>https://ws.pagseguro.uol.com.br/v2/checkout</pagseguro_api_url>
              	<pagseguro_api_redirect_url>https://pagseguro.uol.com.br/v2/checkout/payment.html</pagseguro_api_redirect_url>
+                <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/nc/payment/booklet/print.jhtml</pagseguro_billet_url>
+                <open_in_other_page>1</open_in_other_page>
                 <debug>1</debug>
     		</pagseguro_api>
     	</payment>

@@ -18,9 +18,44 @@
 abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abstract
 {
 
+	/**
+	 * Provide Helper to children classes
+	 *
+	 * @return OsStudios_PagSeguroApi_Helper_Data
+	 */
 	protected function helper()
 	{
 		return Mage::helper('pagseguroapi');
 	}
+
+    /**
+     * Provides any module config option
+     *
+     */
+	protected function getConfigData($configNode)
+	{
+		return Mage::getStoreConfig('payment/pagseguro_api/'.$configNode);
+	}
+
+	/**
+     * Returns the URL to generate the billets of PagSeguro
+     * 
+     * @param string $transactionId = PagSeguro Transaction ID
+     * @return (string)
+     */ 
+    public function getPagSeguroBilletUrl($transactionId, $escapeHtml = true)
+    {
+        $url = $this->getConfigData('pagseguro_billet_url');
+
+    	if(!$url) {
+            //Mage::throwException($this->helper()->__('The PagSeguro Billet URL could not be retrieved.'));
+    	}
+    	
+        $url .= '?resizeBooklet=n&code=' . $transactionId;
+        if ($escapeHtml) {
+            $url = $this->helper()->escapeHtml($url);
+        }
+        return $url;
+    }
 
 }

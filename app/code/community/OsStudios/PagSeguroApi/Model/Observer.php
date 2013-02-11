@@ -15,9 +15,24 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguroApi_Model_Data extends OsStudios_PagSeguroApi_Model_Abstract
+class OsStudios_PagSeguroApi_Model_Observer extends OsStudios_PagSeguroApi_Model_Abstract
 {
 
-	
+	public function salesOrderPaymentLoadAfter(Varien_Event_Observer $observer)
+	{
+		$order = $observer->getEvent()->getOrder();
+
+		if($order->getId()) {
+			$payment = $order->getPayment();
+
+			$history = Mage::getModel('pagseguroapi/payment_history')->load($order->getId(), 'order_id');
+
+			if($history->getHistoryId()) {
+				$payment->addData(array(
+					'pagseguro_info' => $history,
+				));
+			}
+		}
+	}
 
 }
