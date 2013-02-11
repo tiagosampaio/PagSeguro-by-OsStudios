@@ -15,7 +15,7 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguro_Model_Payment_Method_Api_Xml extends OsStudios_PagSeguro_Model_Abstract
+class OsStudios_PagSeguroApi_Model_Payment_Method_Api_Xml extends OsStudios_PagSeguroApi_Model_Abstract
 {
     
     /**
@@ -335,7 +335,7 @@ class OsStudios_PagSeguro_Model_Payment_Method_Api_Xml extends OsStudios_PagSegu
         
         $xmlShipping->addChild('cost', $this->_formatNumberToXml($this->getOrder()->getShippingAmount()));
         
-            $xmlShipping->addChild('type', Mage::getStoreConfig('payment/pagseguro_api/shipping_type'));
+            $xmlShipping->addChild('type', Mage::getStoreConfig('payment/'.OsStudios_PagSeguroApi_Model_Payment::PAGSEGURO_METHOD_CODE_API.'/shipping_type'));
             $xmlAddress = $xmlShipping->addChild('address');
             
             if(is_array($shipping->getStreet())) {
@@ -344,7 +344,7 @@ class OsStudios_PagSeguro_Model_Payment_Method_Api_Xml extends OsStudios_PagSegu
                 $street = $shipping->getStreet();
             }
             
-            $address = Mage::helper('pagseguro/visie')->trataEndereco($street);
+            $address = $this->helper()->trataEndereco($street);
             
             $xmlAddress->addChild('street', $this->helper()->cleanStringToXml($address[0]));
             $xmlAddress->addChild('number', preg_replace('/[^0-9]/', null, $address[1]));

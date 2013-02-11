@@ -18,6 +18,9 @@
 abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abstract
 {
 
-
+	protected function helper()
+	{
+		return Mage::helper('pagseguroapi');
+	}
 
 }

@@ -116,6 +116,8 @@
     <default>
     	<payment>
     		<pagseguro_api>
+                <account_email/>
+                <account_token/>
     			<model>OsStudios_PagSeguroApi_Model_Payment_Method_Api</model>
 				<active>0</active>
 				<title>PagSeguro UOL - API</title>
@@ -126,9 +128,9 @@
 				<extra_amount>0.00</extra_amount>
 				<shipping_type>1</shipping_type>
 				<payment_action>authorize</payment_action>
-				<debug>1</debug>
 				<pagseguro_api_url>https://ws.pagseguro.uol.com.br/v2/checkout</pagseguro_api_url>
              	<pagseguro_api_redirect_url>https://pagseguro.uol.com.br/v2/checkout/payment.html</pagseguro_api_redirect_url>
+                <debug>1</debug>
     		</pagseguro_api>
     	</payment>
     	<osstudios_pagseguroapi>

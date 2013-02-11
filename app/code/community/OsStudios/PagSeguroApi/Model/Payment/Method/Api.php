@@ -26,11 +26,10 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
     protected $_canUseForMultishipping  = false;
     protected $_canAuthorize            = true;
     
-    
     protected $_isGateway               = true;
     protected $_canOrder                = true;
     
-    protected $_resultCodeRegistry      = 'pagseguro_result_code';
+    protected $_resultCodeRegistry      = 'pagseguroapi_result_code';
 
     /**
      * Return the URL to be redirected to when finish purchasing
@@ -44,7 +43,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         $_code = Mage::registry($this->_resultCodeRegistry);
 
         if($this->_isValidPagSeguroResultCode($_code)) {
-            $url = sprintf('%s?code=%s', Mage::getSingleton('pagseguro/data')->getPagSeguroApiRedirectUrl(), $_code);
+            $url = sprintf('%s?code=%s', $this->getConfigData('pagseguro_api_redirect_url'), $_code);
             Mage::unregister($this->_resultCodeRegistry);
             return $url;
         }
@@ -66,10 +65,9 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
             Mage::throwException(Mage::helper('payment')->__('Authorize action is not available.'));
         }
 
-        $credentials = Mage::getSingleton('pagseguroapi/credentials');
-        $url = sprintf('%s?email=%s&token=%s', Mage::getSingleton('pagseguro/data')->getPagSeguroApiUrl(), $credentials->getAccountEmail(), $credentials->getToken());
+        $url = sprintf('%s?email=%s&token=%s', $this->getConfigData('pagseguro_api_url'), $this->getConfigData('account_email'), $this->getConfigData('account_token'));
 
-        $xml = Mage::getSingleton('pagseguro/paymento_method_api_xml')->setOrder($this->_getOrder())->getXml();
+        $xml = Mage::getSingleton('pagseguroapi/payment_method_api_xml')->setOrder($this->_getOrder())->getXml();
 
         $client = new Zend_Http_Client($url);
         $client->setMethod(Zend_Http_Client::POST)
@@ -86,7 +84,11 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         $body = new Varien_Simplexml_Config($request->getBody());
 
         $result = $body->getNode()->asArray();
-        
+
+        Mage::log($xml, null, '$xml.log');
+        Mage::log($body, null, '$body.log');
+        Mage::throwException('Opa! Agora não...');
+
         if((!$result['code'] || !$this->_isValidPagSeguroResultCode($result['code'])) || !$result['date']) {
             Mage::throwException(Mage::helper('pagseguro')->__('Your payment could not be processed by PagSeguro.'));
         }
