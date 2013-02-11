@@ -16,18 +16,36 @@
  */
 ?>
 
-<p>
-    <strong><?php echo $this->getMethod()->getTitle() ?></strong>
-    
-    <?php if ($this->getShowPaylink()): ?>
-    	(<a href="<?php echo $this->getPayUrl(); ?>" onclick="this.target='_blank'">pagar</a>)
-    <?php endif; ?>
+<p><strong><?php echo $this->getMethod()->getTitle() ?></strong></p>
 
-    <?php if ($this->getShowInfo()): ?>
-    	<br/>
-        <br/><?php echo $this->__('<b>Transaction ID</b>: %s', $this->getInfo()->getPagseguroInfo()->getPagseguroTransactionId())?>
-        <br/><?php echo $this->__('<b>Transaction Date</b>: %s', Mage::getModel('core/date')->date('d/m/Y H:i:s', $this->getInfo()->getPagseguroInfo()->getPagseguroTransactionDate()))?>
-        <br/><?php echo $this->__('<b>Payment Method</b>: %s', $this->getInfo()->getPagseguroInfo()->getPaymentMethod())?>
-        <br/>
-    <?php endif; ?>
-</p>
+<?php if ($this->getShowInfo()): ?>
+    <br/>
+    <ul class="pagseguro-infos">
+        <li><label><strong><?php echo $this->__('Transaction ID')?></strong></label></li>
+        <li><?php echo $this->getPagseguroInfo()->getPagseguroTransactionId() ?></li>
+
+        <li><label><strong><?php echo $this->__('Transaction Date')?></strong></label></li>
+        <li><?php echo Mage::getModel('core/date')->date('d/m/Y H:i:s', $this->getPagseguroInfo()->getPagseguroTransactionDate()) ?></li>
+
+        <li><label><strong><?php echo $this->__('Payment Method')?></strong></label></li>
+        <li>
+            <?php echo $this->__('%s (%s)', $this->getTransactionPaymentMethodTypeLabel(), $this->getTransactionPaymentMethodCodeLabel()) ?>
+        </li>
+
+        <li><label><strong><?php echo $this->__('Payment Status')?></strong></label></li>
+        <li>
+        <?php if($this->isPaid()):?>
+            <?php echo $this->__('The payment was successfully registered in PagSeguro.') ?>
+        <?php else:?>
+            <span><?php echo $this->__('The status of the order is <b><i>%s</i></b> in PagSeguro.', $this->getTransactionStatusLabel()) ?></span><br/>
+            <?php if($this->getShowPayBilletUrl()):?>
+            <?php echo $this->__('Click <a href="%s" target="_blank">here</a> to generate your billet again.', $this->getBilletPayUrl())?>
+            <?php endif;?>
+            <?php if ($this->getShowPaylink()): ?>
+            <?php echo $this->__('Click <a href="%s" target="_blank">here</a> to pay your order.', $this->getPayUrl())?></p>
+            <?php endif; ?>
+        <?php endif;?>
+        </li>
+    </ul>
+    <br/>
+<?php endif; ?>

@@ -141,7 +141,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      * 
      * @param string $message
      */
-    public function log($message)
+    protected function log($message)
     {
     	Mage::getSingleton('pagseguro/data')->log($message);
     	return $this;
@@ -152,9 +152,21 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      *
      * @return OsStudios_PagSeguroApi_Helper_Data
      */
-    public function helper()
+    protected function helper()
     {
         return Mage::helper('pagseguroapi');
+    }
+
+    /**
+     * Returns the URL where the customer needs to be redirected to
+     * 
+     * @param string $identifierCode
+     *
+     * @return (string)
+     */ 
+    protected function getPagseguroApiRedirectUrl($identifierCode = null)
+    {
+        return Mage::getModel('pagseguroapi/data')->getPagseguroApiRedirectUrl($identifierCode);
     }
     
 }

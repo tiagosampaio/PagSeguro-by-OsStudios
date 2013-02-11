@@ -20,9 +20,9 @@ class OsStudios_PagSeguroApi_Model_Observer extends OsStudios_PagSeguroApi_Model
 
 	public function salesOrderPaymentLoadAfter(Varien_Event_Observer $observer)
 	{
-		$order = $observer->getEvent()->getOrder();
+		$order = $observer->getOrder();
 
-		if($order->getId()) {
+		if($order->getId() && ($order instanceof Mage_Sales_Model_Order)) {
 			$payment = $order->getPayment();
 
 			$history = Mage::getModel('pagseguroapi/payment_history')->load($order->getId(), 'order_id');
@@ -34,5 +34,5 @@ class OsStudios_PagSeguroApi_Model_Observer extends OsStudios_PagSeguroApi_Model
 			}
 		}
 	}
-
+	
 }

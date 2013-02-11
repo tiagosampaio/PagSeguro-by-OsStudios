@@ -123,6 +123,9 @@
                 </pagseguroapi>
             </updates>
         </layout>
+        <events>
+
+        </events>
     </frontend>
     <default>
     	<payment>
@@ -138,16 +141,193 @@
 				<max_uses>100</max_uses>
 				<max_age>3600</max_age>
 				<extra_amount>0.00</extra_amount>
-				<shipping_type>1</shipping_type>
-				<payment_action>authorize</payment_action>
+				<shipping_type>3</shipping_type>
+				<payment_action>createTransaction</payment_action>
 				<pagseguro_api_url>https://ws.pagseguro.uol.com.br/v2/checkout</pagseguro_api_url>
              	<pagseguro_api_redirect_url>https://pagseguro.uol.com.br/v2/checkout/payment.html</pagseguro_api_redirect_url>
-                <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/nc/payment/booklet/print.jhtml</pagseguro_billet_url>
+                <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml</pagseguro_billet_url>
+                <pagseguro_transactions_url>https://ws.pagseguro.uol.com.br/v2/transactions</pagseguro_transactions_url>
+                <pagseguro_notifications_url>https://ws.pagseguro.uol.com.br/v2/transactions/notifications</pagseguro_notifications_url>
                 <open_in_other_page>1</open_in_other_page>
                 <debug>1</debug>
     		</pagseguro_api>
     	</payment>
     	<osstudios_pagseguroapi>
+            <transaction>
+                <status>
+                    <status_1>
+                        <value>1</value>
+                        <label>Aguardando pagamento</label>
+                    </status_1>
+                    <status_2>
+                        <value>2</value>
+                        <label>Em análise</label>
+                    </status_2>
+                    <status_3>
+                        <value>3</value>
+                        <label>Paga</label>
+                    </status_3>
+                    <status_4>
+                        <value>4</value>
+                        <label>Disponível</label>
+                    </status_4>
+                    <status_5>
+                        <value>5</value>
+                        <label>Em disputa</label>
+                    </status_5>
+                    <status_6>
+                        <value>6</value>
+                        <label>Devolvida</label>
+                    </status_6>
+                    <status_7>
+                        <value>7</value>
+                        <label>Cancelada</label>
+                    </status_7>
+                </status>
+                <payment_methods>
+                    <types>
+                        <type_1>
+                            <value>1</value>
+                            <label>Cartão de crédito</label>
+                        </type_1>
+                        <type_2>
+                            <value>2</value>
+                            <label>Boleto</label>
+                        </type_2>
+                        <type_3>
+                            <value>3</value>
+                            <label>Débito online (TEF)</label>
+                        </type_3>
+                        <type_4>
+                            <value>4</value>
+                            <label>Saldo PagSeguro</label>
+                        </type_4>
+                        <type_5>
+                            <value>5</value>
+                            <label>Oi Paggo</label>
+                        </type_5>
+                    </types>
+                    <codes>
+                        <!-- Cartão de Crédito -->
+                        <code_101>
+                            <value>101</value>
+                            <label>Cartão de crédito Visa</label>
+                        </code_101>
+                        <code_102>
+                            <value>102</value>
+                            <label>Cartão de crédito MasterCard</label>
+                        </code_102>
+                        <code_103>
+                            <value>103</value>
+                            <label>Cartão de crédito American Express</label>
+                        </code_103>
+                        <code_104>
+                            <value>104</value>
+                            <label>Cartão de crédito Diners</label>
+                        </code_104>
+                        <code_105>
+                            <value>105</value>
+                            <label>Cartão de crédito Hipercard</label>
+                        </code_105>
+                        <code_106>
+                            <value>106</value>
+                            <label>Cartão de crédito Aura</label>
+                        </code_106>
+                        <code_107>
+                            <value>107</value>
+                            <label>Cartão de crédito Elo</label>
+                        </code_107>
+                        <code_108>
+                            <value>108</value>
+                            <label>Cartão de crédito PLENOCard</label>
+                        </code_108>
+                        <code_109>
+                            <value>109</value>
+                            <label>Cartão de crédito PersonalCard</label>
+                        </code_109>
+                        <code_110>
+                            <value>110</value>
+                            <label>Cartão de crédito JCB</label>
+                        </code_110>
+                        <code_111>
+                            <value>111</value>
+                            <label>Cartão de crédito Discover</label>
+                        </code_111>
+                        <code_112>
+                            <value>112</value>
+                            <label>Cartão de crédito BrasilCard</label>
+                        </code_112>
+                        <code_113>
+                            <value>113</value>
+                            <label>Cartão de crédito FORTBRASIL</label>
+                        </code_113>
+                        <!-- Boleto-->
+                        <code_201>
+                            <value>201</value>
+                            <label>Boleto Bradesco</label>
+                        </code_201>
+                        <code_202>
+                            <value>202</value>
+                            <label>Boleto Santander</label>
+                        </code_202>
+                        <!-- Débito online (TEF) -->
+                        <code_301>
+                            <value>301</value>
+                            <label>Débito online Bradesco</label>
+                        </code_301>
+                        <code_302>
+                            <value>302</value>
+                            <label>Débito online Itaú</label>
+                        </code_302>
+                        <code_303>
+                            <value>303</value>
+                            <label>Débito online Unibanco</label>
+                        </code_303>
+                        <code_304>
+                            <value>304</value>
+                            <label>Débito online Banco do Brasil</label>
+                        </code_304>
+                        <code_305>
+                            <value>305</value>
+                            <label>Débito online Banco Real</label>
+                        </code_305>
+                        <code_306>
+                            <value>306</value>
+                            <label>Débito online Banrisul</label>
+                        </code_306>
+                        <code_307>
+                            <value>307</value>
+                            <label>Débito online HSBC</label>
+                        </code_307>
+                        <!-- Saldo PagSeguro -->
+                        <code_401>
+                            <value>401</value>
+                            <label>Saldo PagSeguro</label>
+                        </code_401>
+                        <!-- Oi Paggo -->
+                        <code_501>
+                            <value>501</value>
+                            <label>Oi Paggo</label>
+                        </code_501>
+                    </codes>
+                </payment_methods>
+                <shipping>
+                    <types>
+                        <pac>
+                            <value>1</value>
+                            <label>Encomenda normal (PAC)</label>
+                        </pac>
+                        <sedex>
+                            <value>2</value>
+                            <label>SEDEX</label>
+                        </sedex>
+                        <not_specified>
+                            <value>3</value>
+                            <label>Tipo de frete não especificado</label>
+                        </not_specified>
+                    </types>
+                </shipping>
+            </transaction>
     		<error_codes>
 	            <code_11001>receiverEmail is required.</code_11001>
 	            <code_11002>receiverEmail invalid length: {0}</code_11002>
@@ -207,22 +387,6 @@
 	            <code_11056>sender address required invalid value: {0}</code_11056>
 	            <code_11057>sender address not required with address data filled</code_11057>
         	</error_codes>
-        	<shipping>
-        		<types>
-        			<pac>
-        				<value>1</value>
-        				<label>Encomenda normal (PAC)</label>
-        			</pac>
-        			<sedex>
-        				<value>2</value>
-        				<label>SEDEX</label>
-        			</sedex>
-        			<not_specified>
-        				<value>3</value>
-        				<label>Tipo de frete não especificado</label>
-        			</not_specified>
-        		</types>
-        	</shipping>
         </osstudios_pagseguroapi>
     </default>
 </config>

@@ -20,7 +20,7 @@
  *
  */
 
-class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Abstract
+class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
 {
     
 	/**

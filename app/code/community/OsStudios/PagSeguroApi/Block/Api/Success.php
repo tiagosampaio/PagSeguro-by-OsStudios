@@ -54,18 +54,12 @@ class OsStudios_PagSeguroApi_Block_Api_Success extends Mage_Core_Block_Template
     			$this->addData(array(
     				'pagseguro_transaction' => $pagseguroInfo,
     				'pagseguro_boleto_url'  => Mage::getSingleton('pagseguroapi/data')->getPagSeguroBilletUrl($pagseguroInfo->getPagseguroTransactionId()),
-    				'pagseguro_payment_url' => sprintf('%s?code=%s', Mage::helper('pagseguroapi')->getPagSeguroRedirectUrl(), $pagseguroInfo->getPagseguroTransactionId()),
+    				'pagseguro_payment_url' => Mage::getSingleton('pagseguroapi/data')->getPagseguroApiRedirectUrl($pagseguroInfo->getPagseguroPaymentIdentifierCode()),
     			));
     		}
     	}
 
         return parent::_beforeToHtml();
     }
-
-	public function getRealOrderId()
-    {
-        $order = Mage::getModel('sales/order')->load($this->getLastOrderId());
-        return $order->getIncrementId();
-    }
-
+    
 }

@@ -24,27 +24,6 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
 {
     
     const PARCEL_MAX_VALUE = 5;
-
-    /**
-     * Escapa entidades HTML.
-     * Função criada para compatibilidade com versões mais antigas do Magento.
-     *
-     * @param   mixed $data
-     * @param   array $allowedTags
-     * @return  string
-     */
-    public function escapeHtml($data, $allowedTags = null)
-    {
-        $core_helper = Mage::helper('core');
-        if (method_exists($core_helper, "escapeHtml")) {
-            return $core_helper->escapeHtml($data, $allowedTags);
-        } elseif (method_exists($core_helper, "htmlEscape")) {
-            return $core_helper->htmlEscape($data, $allowedTags);
-        } else {
-            return $data;
-        }
-        
-    }
     
     /**
      * Calcula preço da parcela desejada, de acordo com o valor informado e até
@@ -210,11 +189,6 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         $tel     = substr($numeros, sizeof($numeros)-9);
         $ddd     = substr($numeros, sizeof($numeros)-11,2);
         return array($ddd, $tel);
-    }
-    
-    public function formatDate($date)
-    {
-        
     }
     
     /**
