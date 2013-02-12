@@ -87,8 +87,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						}
 
 						if(!$order->canInvoice()) {
-		                    $order->addStatusHistoryComment('PagSeguroApi: Order cannot be invoiced automatically.', false);
-		                    $order->save();
+		                    $order->addStatusHistoryComment('PagSeguroApi: Order cannot be invoiced automatically.', false)->save();
 		                }
 						//START Handle Invoice
 						$invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
@@ -96,7 +95,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						$invoice->register();
 						$invoice->getOrder()->setCustomerNoteNotify(false);
 						$invoice->getOrder()->setIsInProcess(true);
-						$order->addStatusHistoryComment($this->helper()->__('Automatically invoiced by PagSeguroApi. PagSeguro confirmed the payment.'), false);
+						$order->addStatusHistoryComment($this->helper()->__('Automatically invoiced by PagSeguroApi. PagSeguro confirmed the payment.'), false)->save();
 						$transactionSave = Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder());
 						$transactionSave->save();
 						//END Handle Invoice
