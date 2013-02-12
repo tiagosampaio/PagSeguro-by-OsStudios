@@ -65,7 +65,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						try {
 							if($order->canHold()) {
 							    $order->hold()->save();
-							    $order->addStatusHistoryComment($this->helper()->__('Automatically holded by PagSeguroApi. Payment method is billet.'), false);
+							    $order->addStatusHistoryComment($this->helper()->__('Automatically holded by PagSeguroApi. Payment method is billet.'), false)->save();
 							}
 						} catch (Exception $e) {
 							Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to hold order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_returns_exceptions.log');
