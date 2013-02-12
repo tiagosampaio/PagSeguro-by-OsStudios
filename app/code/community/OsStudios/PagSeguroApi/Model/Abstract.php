@@ -18,10 +18,19 @@
 abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abstract
 {
 
+    const XPATH_CONFIG_TRANSACTION = 'osstudios_pagseguroapi/transaction/';
+
+
+    /**
+     * Get config instance
+     *
+     * @return Mage_Core_Model_Config
+     */
     private function _getConfig()
     {
         return Mage::app()->getConfig();
     }
+
 
 	/**
 	 * Provide Helper to children classes
@@ -33,6 +42,7 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
 		return Mage::helper('pagseguroapi');
 	}
 
+
     /**
      * Provides any module config option
      *
@@ -42,35 +52,56 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
 		return Mage::getStoreConfig('payment/pagseguro_api/'.$configNode);
 	}
 
+
     /**
      * Provides the credentials model
      *
+     * @return OsStudios_PagSeguroApi_Model_Credentials
      */
     protected function _getCredentials()
     {
         return Mage::getSingleton('pagseguroapi/credentials');
     }
 
+
+    /**
+     * Get Transaction Payment Method Type label
+     *
+     * @return string
+     */
     public function getTransactionPaymentMethodTypeLabel($type)
     {
-        $path = 'osstudios_pagseguroapi/transaction/payment_methods/types/type_'.$type.'/label';
+        $path = self::XPATH_CONFIG_TRANSACTION.'payment_methods/types/type_'.$type.'/label';
         $label = Mage::getStoreConfig($path);
         return $label;
     }
 
+
+    /**
+     * Get Transaction Payment Method Code label
+     *
+     * @return string
+     */
     public function getTransactionPaymentMethodCodeLabel($code)
     {
-        $path = 'osstudios_pagseguroapi/transaction/payment_methods/codes/code_'.$code.'/label';
+        $path = self::XPATH_CONFIG_TRANSACTION.'payment_methods/codes/code_'.$code.'/label';
         $label = Mage::getStoreConfig($path);
         return $label;
     }
 
+
+    /**
+     * Get Transaction Status label
+     *
+     * @return string
+     */
     public function getTransactionStatusLabel($code)
     {
-        $path = 'osstudios_pagseguroapi/transaction/status/status_'.$code.'/label';
+        $path = self::XPATH_CONFIG_TRANSACTION.'status/status_'.$code.'/label';
         $label = Mage::getStoreConfig($path);
         return $label;
     }
+
 
 	/**
      * Returns the URL to generate the billets of PagSeguro
@@ -94,6 +125,7 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
         return $escapeHtml ? $this->helper()->htmlEscape($url) : $url;
     }
 
+
     /**
      * Returns the URL to consult the transactions in PagSeguro
      * 
@@ -116,6 +148,7 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
         return $escapeHtml ? $this->helper()->htmlEscape($url) : $url;
     }
     
+
     /**
      * Returns the notifications URL to consult the transactions in PagSeguro
      * 
@@ -137,6 +170,7 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
 
         return $escapeHtml ? $this->helper()->htmlEscape($url) : $url;
     }
+
 
     /**
      * Returns the URL where the customer needs to be redirected to

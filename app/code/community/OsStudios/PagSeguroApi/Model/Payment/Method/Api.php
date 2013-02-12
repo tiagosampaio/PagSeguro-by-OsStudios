@@ -54,6 +54,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         return false;
     }
     
+
     /**
      * Method that will be executed instead of authorize or capture
      * if flag isInitializeNeeded set to true
@@ -67,6 +68,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
     {
         return $this->$paymentAction();
     }
+
 
     /**
      * Creates a new order request in PagSeguro via Api method
@@ -112,6 +114,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         return $this;
     }
 
+
     /**
      * Get Order Object
      *
@@ -122,6 +125,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         return Mage::getModel('sales/order')->loadByIncrementId($this->_getOrderIncrementId());
     }
     
+
     /**
      * Order increment ID getter (either real from order or a reserved from quote)
      *
@@ -141,6 +145,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         }
     }
     
+
     /**
      * Whether current operation is order placement
      *
@@ -156,6 +161,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
         }
     }
 
+    
     /**
      * Validates the result code from PagSeguro call
      * 

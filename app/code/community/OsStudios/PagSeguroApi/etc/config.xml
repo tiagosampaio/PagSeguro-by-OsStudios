@@ -148,7 +148,11 @@
                 <pagseguro_billet_url>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml</pagseguro_billet_url>
                 <pagseguro_transactions_url>https://ws.pagseguro.uol.com.br/v2/transactions</pagseguro_transactions_url>
                 <pagseguro_notifications_url>https://ws.pagseguro.uol.com.br/v2/transactions/notifications</pagseguro_notifications_url>
-                <open_in_other_page>1</open_in_other_page>
+                <open_in_other_page>0</open_in_other_page>
+                <automatically_change_orders>1</automatically_change_orders>
+                <automatically_cancel_orders>1</automatically_cancel_orders>
+                <automatically_invoice_orders>1</automatically_invoice_orders>
+                <automatically_hold_orders_for_billet>1</automatically_hold_orders_for_billet>
                 <debug>1</debug>
     		</pagseguro_api>
     	</payment>

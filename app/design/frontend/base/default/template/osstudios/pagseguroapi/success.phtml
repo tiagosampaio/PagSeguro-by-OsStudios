@@ -39,7 +39,7 @@
     <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
 <?php endif;?>
 
-<?php if($transaction):?>
+<?php if($transaction && $transaction->getPagseguroTransactionId()): ?>
     <p><?php echo $this->__('The transaction ID for your order in PagSeguro is: %s.', $transaction->getPagseguroTransactionId())?></p>
 <?php endif;?>
 

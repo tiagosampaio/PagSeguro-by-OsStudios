@@ -38,6 +38,8 @@ class OsStudios_PagSeguroApi_Model_Returns_Transaction extends OsStudios_PagSegu
 			'status' 				=> $arr['status'],
 			'last_event_date' 		=> $arr['lastEventDate'],
 			'payment_method' 		=> $paymentMethod,
+			'payment_method_type'	=> $paymentMethod->getType(),
+			'payment_method_code'	=> $paymentMethod->getCode(),
 			'gross_amount' 			=> $arr['grossAmount'],
 			'discount_amount' 		=> $arr['discountAmount'],
 			'fee_amount' 			=> $arr['feeAmount'],
@@ -46,6 +48,8 @@ class OsStudios_PagSeguroApi_Model_Returns_Transaction extends OsStudios_PagSegu
 			'installment_count' 	=> $arr['installmentCount'],
 			'item_count' 			=> $arr['itemCount'],
 			'sender' 				=> $sender,
+			'sender_name' 			=> $sender->getName(),
+			'sender_email' 			=> $sender->getEmail(),
 		);
 
 		if($data['reference']) {

@@ -25,9 +25,7 @@ class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Co
         if($this->_validateRequest($request)) {
             $post = $request->getPost();
             $url = Mage::getSingleton('pagseguroapi/data')->getPagSeguroNotificationUrl($post['notificationCode']);
-
-            Mage::log($post, null, '$post.log');
-
+            
             $consulter = Mage::getModel('pagseguroapi/consulter');
             $consulter->consultByNotificationId($post['notificationCode']);
         }

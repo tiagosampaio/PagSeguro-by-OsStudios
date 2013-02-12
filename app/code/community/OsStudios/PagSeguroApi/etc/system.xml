@@ -29,7 +29,7 @@
                     <show_in_store>1</show_in_store>
                     <comment>
                         <![CDATA[
-                        	<a href="http://www.osstudios.com.br/" target="_blank"><img style="border:none;" src="http://www.osstudios.com.br/skin/frontend/osstudios/osstudios/images/logo.png"/></a><br/><br/>
+                        	<a href="http://www.osstudios.com.br/" target="_blank" title="Os Studios Design - Desenvolvendo o Futuro Online!"><img style="border:none;" src="http://www.osstudios.com.br/skin/frontend/osstudios/osstudios/images/logo.png"/></a><br/><br/>
                             Versão do Módulo: 1.0.0.0<br/>
                             Desenvolvido por <b><a href="mailto:tiago.sampaio@osstudios.com.br">Tiago Sampaio</a></b><br/>
                             Visite o website da <a href="http://www.osstudios.com.br" target="_blank">Os Studios Design</a>.
@@ -145,8 +145,61 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment>If is set to true the PagSeguro page will be opened in other page and the current page will be the success page.</comment>
+                            <comment>If set to true the PagSeguro page will be opened in other page and the current page will be the success page.</comment>
                         </open_in_other_page>
+
+                        <automatically_change_orders translate="label, comment">
+                            <label>Change Orders Automatically</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If set to true the orders can be changed automatically by API returns from PagSeguro.</comment>
+                        </automatically_change_orders>
+
+                        <automatically_cancel_orders translate="label, comment">
+                            <label>Cancel Orders Automatically</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If set to true the order will be canceled automatically when PagSeguro cancel it.</comment>
+                            <depends>
+                                <automatically_change_orders>1</automatically_change_orders>
+                            </depends>
+                        </automatically_cancel_orders>
+
+                        <automatically_invoice_orders translate="label, comment">
+                            <label>Invoice Orders Automatically</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If set to true the order will be invoiced automatically when PagSeguro approve the payment.</comment>
+                            <depends>
+                                <automatically_change_orders>1</automatically_change_orders>
+                            </depends>
+                        </automatically_invoice_orders>
+
+                        <automatically_hold_orders_for_billet translate="label, comment">
+                            <label>Hold Order for Billet Payment Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If set to true the order will be holded until PagSeguro approve or cancel the payment.</comment>
+                            <depends>
+                                <automatically_change_orders>1</automatically_change_orders>
+                            </depends>
+                        </automatically_hold_orders_for_billet>
                     </fields>
                 </pagseguro_api>
         	</groups>

@@ -36,9 +36,6 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 		if($transactionId) {
 			$url = $this->getPagSeguroTransactionUrl($transactionId);
 
-			$transaction = 'AF6C3133-32F3-40DF-B690-F5C016A47ADB';
-			$url = "https://ws.pagseguro.uol.com.br/v2/transactions/{$transaction}?email=thiko_38@hotmail.com&token=35EA3CABB6F243059A87B8053FB4905D";
-
 			$this->_consult($url);
 
 			return $this;
@@ -56,8 +53,6 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 	public function consultByNotificationId($notificationId)
 	{
 		$url = $this->getPagSeguroNotificationUrl($notificationId);
-
-		Mage::log($url, null, '$url.log');
 
 		$this->_consult($url);
 
@@ -77,12 +72,9 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 	{
 		$client = new Zend_Http_Client($url);
 		$client->setMethod(Zend_Http_Client::GET);
-			   //->setParameterGet($this->_params);
 		
 		$request = $client->request();
 		$body = $request->getBody();
-
-		MAge::log($body, null, '$body.log');
 
 		if(!$this->helper()->isXml($body)) {
 			return;

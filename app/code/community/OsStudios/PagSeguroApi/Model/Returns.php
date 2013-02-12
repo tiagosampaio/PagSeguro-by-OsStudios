@@ -23,7 +23,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 	 *
 	 * @param Varien_Simplexml_Config $xml
 	 *
-	 * @return (boolean)
+	 * @return OsStudios_PagSeguroApi_Model_Returns
 	 */
 	public function updateSingleTransaction(Varien_Simplexml_Config $xml)
 	{
@@ -31,16 +31,124 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 
 		if($this->_isTransactionCompatible($transaction->importData($xml))) {
 			$this->_updatePaymentHistory($transaction);
-			//Mage::log($transaction->debug(), null, '$transaction.log');
+
+			if($this->getConfigData('automatically_change_orders')) {
+				$this->_updateOrderByTransaction($transaction);
+			}
 		}
 
+		return $this;
 	}
 
+
+	/**
+	 * Updates the order according to transaction
+	 *
+	 * @param OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction
+	 *
+	 * @return OsStudios_PagSeguroApi_Model_Returns
+	 */
+	protected function _updateOrderByTransaction(OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction)
+	{
+
+		$order = $transaction->getOrder();
+
+		switch ($transaction->getStatus()) {
+			case 1 || 2:
+				/**
+				 * 1: Aguardando pagamento: o comprador iniciou a transação, mas até o momento o PagSeguro não recebeu nenhuma informação sobre o pagamento.
+				 * 2: Em análise: o comprador optou por pagar com um cartão de crédito e o PagSeguro está analisando o risco da transação.
+				 */
+
+				if($transaction->getPaymentMethod()->getType() == 2) {
+					if($this->getConfigData('automatically_hold_orders_for_billet')) {
+						try {
+							if($order->canHold()) {
+							    $order->hold()->save();
+							    $order->addStatusHistoryComment($this->helper()->__('Automatically holded by PagSeguroApi. Payment method is billet.'), false);
+							}
+						} catch (Exception $e) {
+							Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to hold order automatically. Exception message: %s.', $e->getMessage());
+						}
+					}
+				}				
+
+				break;
+			case 3 || 4:
+				/**
+				 * 3: Paga: a transação foi paga pelo comprador e o PagSeguro já recebeu uma confirmação da instituição financeira responsável pelo processamento. 
+				 * 4: Disponível: a transação foi paga e chegou ao final de seu prazo de liberação sem ter sido retornada e sem que haja nenhuma disputa aberta. 
+				 */
+
+				if($this->getConfigData('automatically_invoice_orders')) {
+					try {
+						if($order->canUnhold()) {
+						    $order->unhold()->save();
+						}
+
+						if(!$order->canInvoice()) {
+		                    $order->addStatusHistoryComment('PagSeguroApi: Order cannot be invoiced automatically.', false);
+		                    $order->save();
+		                }
+						//START Handle Invoice
+						$invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+						$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE);
+						$invoice->register();
+						$invoice->getOrder()->setCustomerNoteNotify(false);
+						$invoice->getOrder()->setIsInProcess(true);
+						$order->addStatusHistoryComment($this->helper()->__('Automatically invoiced by PagSeguroApi. PagSeguro confirmed the payment.'), false);
+						$transactionSave = Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder());
+						$transactionSave->save();
+						//END Handle Invoice
+					} catch (Exception $e) {
+						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to invoice order automatically. Exception message: %s.', $e->getMessage());
+					}
+				}
+
+				break;
+			case 5 || 6:
+				/**
+				 * 5: Em disputa: o comprador, dentro do prazo de liberação da transação, abriu uma disputa. 
+				 * 6: Devolvida: o valor da transação foi devolvido para o comprador. 
+				 */
+
+				break;
+			case 7:
+				/**
+				 * 7: Cancelada: a transação foi cancelada sem ter sido finalizada. 
+				 */
+
+				if($this->getConfigData('automatically_cancel_orders')) {
+					try {
+						if($order->canUnhold()) {
+						    $order->unhold()->save();
+						}
+						if($order->canCancel()) {
+							$order->addStatusHistoryComment($this->helper()->__('Automatically canceled by PagSeguroApi. PagSeguro has canceled the payment.'), false);
+							$order->cancel()->save();
+						}
+					} catch (Exception $e) {
+						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to cancel order automatically. Exception message: %s.', $e->getMessage());
+					}
+				}
+
+				break;
+			default:
+				break;
+		}
+	}
+
+
+	/**
+	 * Updates the history with these new information
+	 *
+	 * @param OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction
+	 *
+	 * @return OsStudios_PagSeguroApi_Model_Returns
+	 */
 	protected function _updatePaymentHistory(OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction, $forceUpdate = true)
 	{
 		$history = Mage::getModel('pagseguroapi/payment_history')->load($transaction->getOrder()->getEntityId(), 'order_id');
-
-		//Mage::log($history->debug(), null, '$history.log');
 
 		if($history->getHistoryId()) {
 			$history->setPagseguroTransactionId($transaction->getCode())
@@ -51,7 +159,10 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 
 			$history->save();
 		}
+
+		return $this;
 	}
+
 
 	/**
 	 * Verifies if the transaction passed is compatible with the order in the system.
