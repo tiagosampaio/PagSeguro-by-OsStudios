@@ -56,6 +56,9 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 	public function consultByNotificationId($notificationId)
 	{
 		$url = $this->getPagSeguroNotificationUrl($notificationId);
+
+		Mage::log($url, null, '$url.log');
+
 		$this->_consult($url);
 
 		return $this;
@@ -78,6 +81,8 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 		
 		$request = $client->request();
 		$body = $request->getBody();
+
+		MAge::log($body, null, '$body.log');
 
 		if(!$this->helper()->isXml($body)) {
 			return;

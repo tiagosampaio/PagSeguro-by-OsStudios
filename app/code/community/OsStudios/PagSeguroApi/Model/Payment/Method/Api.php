@@ -80,8 +80,6 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
 
         $xml = Mage::getSingleton('pagseguroapi/payment_method_api_xml')->setOrder($this->_getOrder())->getXml();
 
-        Mage::log($xml, null, '$xml.log');
-
         $client = new Zend_Http_Client($url);
         $client->setMethod(Zend_Http_Client::POST)
                ->setHeaders('Content-Type: application/xml; charset=ISO-8859-1')
@@ -91,7 +89,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
 
         if(!$this->helper()->isXml($request->getBody())) {
             Mage::log($this->helper()->__("When the system tried to authorize with login '%s' and token '%s' got '%s' as result.", $credentials->getAccountEmail(), $credentials->getAccountToken(), $request->getBody()), null, 'osstudios_pagseguro_unauthorized.log');
-            Mage::throwException('A problem has occured while trying to authorize the transaction in PagSeguro.');
+            Mage::throwException($this->helper()->__('A problem has occured while trying to authorize the transaction in PagSeguro.'));
         }
 
         $body = new Varien_Simplexml_Config($request->getBody());
