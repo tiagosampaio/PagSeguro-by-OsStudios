@@ -31,6 +31,7 @@ class OsStudios_PagSeguroApi_Model_Payment_Method_Api extends OsStudios_PagSegur
     
     protected $_identifierCodeRegistry = 'pagseguroapi_payment_identifier_code';
 
+    
     /**
      * Return the URL to be redirected to when finish purchasing
      * 

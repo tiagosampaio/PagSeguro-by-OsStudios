@@ -23,6 +23,7 @@ class OsStudios_PagSeguroApi_Model_Resource_Payment_History extends Mage_Core_Mo
         $this->_init('pagseguroapi/payment_history', 'history_id');
     }
 
+    
     protected function _beforeSave(Mage_Core_Model_Abstract $object)
     {
     	$object->setCreatedAt(now());

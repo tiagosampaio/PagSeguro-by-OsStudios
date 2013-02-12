@@ -19,18 +19,20 @@ class OsStudios_PagSeguroApi_Model_Credentials extends OsStudios_PagSeguroApi_Mo
 {
 	
 	/**
-	 * 
 	 * PagSeguro Account E-mail
+	 * 
 	 * @var (string)
 	 */
 	protected $_accountEmail = null;
 	
+
 	/**
-	 * 
 	 * PagSeguro Account Token
+	 * 
 	 * @var (string)
 	 */
 	protected $_token = null;
+	
 	
 	/**
 	 * Sets the credentials data to this model

@@ -18,9 +18,41 @@
 class OsStudios_PagSeguroApi_Block_Api_Form extends Mage_Payment_Block_Form
 {
     
+    /**
+     * Sets the template
+     *
+     * @return OsStudios_PagSeguroApi_Block_Api_Form
+     */
     public function _construct() {
         parent::_construct();
         $this->setTemplate('osstudios/pagseguroapi/form.phtml');
+
+        return $this;
+    }
+
+
+    /**
+     * Whether the message will be shown
+     *
+     * @return boolean
+     */
+    public function getShowMessage()
+    {
+    	if(Mage::getSingleton('pagseguroapi/data')->getConfigData('message')) {
+			return true;
+		}
+		return false;;
+    }
+
+
+    /**
+     * Provides the message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+    	return Mage::getSingleton('pagseguroapi/data')->getConfigData('message');
     }
     
 }

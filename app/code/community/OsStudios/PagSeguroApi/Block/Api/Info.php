@@ -22,27 +22,39 @@
 
 class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
 {
+
+    /**
+     * Sets the template
+     *
+     * @return OsStudios_PagSeguroApi_Block_Api_Info
+     */
     protected function _construct()
     {
         parent::_construct();
         $this->setTemplate('osstudios/pagseguroapi/info.phtml');
+
+        return $this;
     }
     
+
     protected function _getOrder()
     {
         return $this->getInfo()->getOrder();
     }
+
 
     protected function _getPayment()
     {
         return $this->_getOrder()->getPayment();
     }
 
+
     protected function _beforeToHtml()
     {
         $this->_prepareInfo();
         return parent::_beforeToHtml();
     }
+
 
     protected function _prepareInfo()
     {
@@ -58,6 +70,7 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
         }
     }
 
+
     public function getShowInfo()
     {
         if($this->getPagseguroInfo()) {
@@ -67,28 +80,38 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
         return false;
     }
 
+
     public function isPaid()
     {
-        return !($this->getPagseguroInfo()->getPagseguroTransactionStatus() == 1);
+        return ($this->getPagseguroInfo()->getPagseguroTransactionStatus() == 1);
     }
+
+
+    public function isCanceled()
+    {
+        return ($this->getPagseguroInfo()->getPagseguroTransactionStatus() == 7);
+    }
+
 
     public function getShowPaylink()
     {
-        if(!$this->isPaid() && !$this->getShowPayBilletUrl()) {
+        if(!$this->isPaid() && !$this->isCanceled() && !$this->getShowPayBilletUrl()) {
             return true;
         }
 
         return false;
     }
+
 
     public function getShowPayBilletUrl()
     {
-        if(!$this->isPaid() && ($this->getPagseguroInfo()->getPagseguroPaymentMethodType() == 2)) {
+        if(!$this->isPaid() && !$this->isCanceled() && ($this->getPagseguroInfo()->getPagseguroPaymentMethodType() == 2)) {
             return true;
         }
 
         return false;
     }
+
 
     public function getBilletPayUrl()
     {
@@ -99,6 +122,7 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
         return;
     }
 
+
     public function getPayUrl()
     {
         if($this->getShowPaylink()) {
@@ -108,6 +132,7 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
         return;
     }
 
+
     public function getTransactionPaymentMethodTypeLabel()
     {
         $paymentMethodType = $this->_getPayment()->getPagseguroInfo()->getPagseguroPaymentMethodType();
@@ -116,6 +141,7 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
         return $label;
     }
 
+
     public function getTransactionPaymentMethodCodeLabel()
     {
         $paymentMethodCode = $this->_getPayment()->getPagseguroInfo()->getPagseguroPaymentMethodCode();
@@ -123,6 +149,7 @@ class OsStudios_PagSeguroApi_Block_Api_Info extends Mage_Payment_Block_Info
 
         return $label;
     }
+
 
     public function getTransactionStatusLabel()
     {

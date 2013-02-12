@@ -53,6 +53,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </active>
+
                         <title translate="label">
                             <label>Title</label>
                             <frontend_type>text</frontend_type>
@@ -61,6 +62,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
+
                         <order_status translate="label">
                             <label>New Orders Status</label>
                             <frontend_type>select</frontend_type>
@@ -70,6 +72,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </order_status>
+
                         <account_email translate="label">
                             <label>PagSeguro Account E-mail</label>
                             <frontend_type>text</frontend_type>
@@ -79,6 +82,7 @@
                             <show_in_store>1</show_in_store>
                             <validate>validate-email</validate>
                         </account_email>
+
                         <account_token translate="label, comment">
                             <label>Token</label>
                             <frontend_type>text</frontend_type>
@@ -88,6 +92,7 @@
                             <show_in_store>1</show_in_store>
                             <comment>To activate automatic return from PagSeguro access your account and generate a token code and paste it here.</comment>
                         </account_token>
+
                         <max_uses translate="label, comment">
                             <label>Max Uses</label>
                             <frontend_type>text</frontend_type>
@@ -98,6 +103,7 @@
                             <comment>Defines the max times the payment code created by API call can be used. This parameter can be used as a secure control.</comment>
                             <validate>validate-number</validate>
                         </max_uses>
+
                         <max_age translate="label, comment">
                             <label>Max Age (Seconds)</label>
                             <frontend_type>text</frontend_type>
@@ -108,6 +114,7 @@
                             <comment>Defines the time limit (in seconds) to use a payment code created by API call. This parameter can be used as a secure control.</comment>
                             <validate>validate-number</validate>
                         </max_age>
+
                         <extra_amount translate="label, comment">
                             <label>Extra Amount</label>
                             <frontend_type>text</frontend_type>
@@ -118,6 +125,7 @@
                             <comment>Defines an extra amount to be added or discounted from the payment. This value can be presented as an additional tax amount or a dicount in case it is negative.</comment>
                             <validate>validate-number</validate>
                         </extra_amount>
+
                         <shipping_type translate="label, comment">
                             <label>Shipping Method (PagSeguro)</label>
                             <frontend_type>select</frontend_type>
@@ -128,6 +136,7 @@
                             <show_in_store>1</show_in_store>
                             <comment>Defines the type of shipping method to be used. This information is used by PagSeguro to calculate, using Correios System, the shipping value based on the weight of the items.</comment>
                         </shipping_type>
+
                         <message translate="label, comment">
                             <label>Add Message</label>
                             <frontend_type>textarea</frontend_type>
@@ -137,6 +146,7 @@
                             <show_in_store>1</show_in_store>
                             <comment>This content is displayed when customer is choosing the payment method on checkout.</comment>
                         </message>
+
                         <open_in_other_page translate="label, comment">
                             <label>Open PagSeguro in Other Page</label>
                             <frontend_type>select</frontend_type>
@@ -200,6 +210,7 @@
                                 <automatically_change_orders>1</automatically_change_orders>
                             </depends>
                         </automatically_hold_orders_for_billet>
+                        
                     </fields>
                 </pagseguro_api>
         	</groups>

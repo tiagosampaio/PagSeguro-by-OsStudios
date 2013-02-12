@@ -18,16 +18,22 @@
 class OsStudios_PagSeguroApi_Block_Api_Success extends Mage_Core_Block_Template
 {
 
+    /**
+     * Sets the template
+     *
+     * @return Mage_Core_Block_Template
+     */
 	public function _construct()
 	{
 		$this->setTemplate('osstudios/pagseguroapi/success.phtml');
-		parent::_construct();
+		return parent::_construct();
 	}
 
+    
 	/**
      * Before rendering html, but after trying to load cache
      *
-     * @return OsStudios_PagSeguroApi_Block_Api_Success
+     * @return Mage_Core_Block_Template
      */
     protected function _beforeToHtml()
     {

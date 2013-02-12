@@ -31,6 +31,7 @@ class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Co
         }
     }
 
+
     /**
      * JUST FOR TESTS
      *
@@ -48,6 +49,7 @@ class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Co
         }
     }
 
+    
     protected function _validateRequest($request)
     {
         if(!$request->isPost()) {

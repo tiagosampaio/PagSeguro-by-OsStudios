@@ -24,6 +24,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      */
     protected $_order = null;
     
+
     /**
      * 
      * Current Quote
@@ -31,8 +32,10 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      */
     protected $_quote = null;
     
+    
     const PAGSEGURO_METHOD_CODE_API = 'pagseguro_api';
     
+
     /**
      * 
      * Status: Complete
@@ -40,6 +43,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      */
     const PAGSEGURO_STATUS_COMPLETE	= 'Completo';
     
+
     /**
      * 
      * Status: Waiting for Payment
@@ -47,6 +51,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      */
     const PAGSEGURO_STATUS_WAITING_PAYMENT = 'Aguardando Pagto';
     
+
     /**
      * 
      * Status: Approved
@@ -54,6 +59,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
      */
     const PAGSEGURO_STATUS_APPROVED	= 'Aprovado';
     
+
     /**
      * 
      * Status: In Analysis
@@ -133,6 +139,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
         return $this;
     }
     
+
 	/**
      * 
      * Registry any event/error log.
@@ -147,6 +154,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
     	return $this;
     }
 
+
     /**
      * Provide Helper to children classes
      *
@@ -156,6 +164,7 @@ abstract class OsStudios_PagSeguroApi_Model_Payment extends Mage_Payment_Model_M
     {
         return Mage::helper('pagseguroapi');
     }
+
 
     /**
      * Returns the URL where the customer needs to be redirected to

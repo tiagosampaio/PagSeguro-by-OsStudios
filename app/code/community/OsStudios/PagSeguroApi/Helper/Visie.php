@@ -39,6 +39,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
 		return (double) str_replace(',', '.', $number);
 	}
 
+
 	/**
      * formatNumber
      * 
@@ -53,6 +54,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
 		return sprintf('%.2f', (double) $number) * 100;
 	}
 	
+
 	/**
 	 * trataEndereco
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -86,6 +88,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return array($this->endtrim($endereco), $this->endtrim($numero), $this->endtrim($complemento));
     }
 	
+
 	/**
 	 * separaNumeroComplemento
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -107,6 +110,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return array(substr($n, 0, $pos), substr($n,$pos));
     }
     
+
 	/**
      * endtrim
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -121,6 +125,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return preg_replace('/^\W+|\W+$/', '', $e);
     }
     
+
 	/**
 	 * brasiliaSeparaComplemento
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -137,6 +142,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return array($end, '');
     }
 	
+
 	/**
 	 * tiraNumeroFinal
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -154,6 +160,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return $endereco;
     }
     
+
 	/**
 	 * buscaReversa
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -177,6 +184,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         }
     }
     
+
 	/**
 	 * ehBrasilia
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)
@@ -199,6 +207,7 @@ class OsStudios_PagSeguroApi_Helper_Visie extends Mage_Core_Helper_Data
         return $brasilia;
     }
 
+    
 	/**
 	 * dados
      * (Extraída da biblioteca PHP do PagSeguro produzida pela Visie)

@@ -43,6 +43,7 @@ class OsStudios_PagSeguroApi_Controller_Front_Action extends Mage_Core_Controlle
         return Mage::getModel('sales/order')->load($orderId)->getStoreId();
     }
     
+    
     /**
      * Get one page checkout model
      *

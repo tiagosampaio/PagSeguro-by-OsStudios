@@ -106,6 +106,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         return array($valor_a_vista, $desconto);
     }
     
+
     /**
      * Calcula planos de parcelamento de acordo com o valor e o número de parcelas
      * sem juros a serem exibidas.
@@ -144,6 +145,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         return $installments;
     }
     
+
     /**
      * Retorna o menor valor de parcela sem juros possível,
      * de acordo o número máximo de parcelas sem juros.
@@ -172,10 +174,12 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         return array($minParcelValue, $parcels);
     }
     
+
     public function ceiling($value, $precision = 0) {
         return ceil($value * pow(10, $precision)) / pow(10, $precision);
     }
     
+
 	/**
 	 * trataTelefone
 	 *
@@ -191,6 +195,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         return array($ddd, $tel);
     }
     
+
     /**
      * 
      * Registry any event/error log.
@@ -244,6 +249,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
 	    return false; 
     }
     
+
     public function cleanStringToXml($string = null)
     {
         
@@ -314,6 +320,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         }
     }
 
+
     /**
      * Whether the PagSeguro must be opened in other page
      *
@@ -324,6 +331,7 @@ class OsStudios_PagSeguroApi_Helper_Data extends OsStudios_PagSeguroApi_Helper_V
         return (bool) Mage::getStoreConfigFlag('payment/pagseguro_api/open_in_other_page');
     }
 
+    
     public function getPagSeguroRedirectUrl()
     {
         return Mage::getStoreConfig('payment/pagseguro_api/pagseguro_api_redirect_url');

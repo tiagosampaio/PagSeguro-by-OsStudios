@@ -22,6 +22,7 @@
 
 class OsStudios_PagSeguroApi_Model_System_Config_Source_Shipping_Type
 {
+	
 	public function toOptionArray ()
 	{
         $options = Mage::app()->getConfig()->getNode('default/osstudios_pagseguroapi/transaction/shipping/types')->asArray();

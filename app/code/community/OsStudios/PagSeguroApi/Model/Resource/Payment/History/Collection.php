@@ -23,6 +23,7 @@ class OsStudios_PagSeguroApi_Model_Resource_Payment_History_Collection extends M
         $this->_init('pagseguroapi/payment_history');
     }
 
+    
     protected function _afterLoad()
     {
     	parent::_afterLoad();

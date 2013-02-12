@@ -40,13 +40,22 @@ class OsStudios_PagSeguroApi_PayController extends OsStudios_PagSeguroApi_Contro
 
         Mage::register('osstudios_pagseguro_last_order_id', $lastOrderId);
         Mage::dispatchEvent('osstudios_pagseguroapi_controller_success_action', array('order_ids' => array($lastOrderId)));
-        
+
+        try {
+            $order = Mage::getModel('sales/order')->load($lastOrderId);
+            if ($order->getCanSendNewEmailFlag()){
+                $order->sendNewOrderEmail();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
         $this->loadLayout();
         $this->_initLayoutMessages('checkout/session');
         Mage::dispatchEvent('checkout_onepage_controller_success_action', array('order_ids' => array($lastOrderId)));
         $this->renderLayout();
 
-        //$session->clear();
+        $session->clear();
 
         Mage::unregister('osstudios_pagseguro_last_order_id');
     }
