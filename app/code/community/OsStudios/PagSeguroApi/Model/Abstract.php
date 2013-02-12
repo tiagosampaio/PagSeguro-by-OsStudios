@@ -132,7 +132,7 @@ abstract class OsStudios_PagSeguroApi_Model_Abstract extends Mage_Core_Model_Abs
         }
 
         if(!is_null($notificationId)) {
-            $url = sprintf('%s/%s?email=%s&token=%s', $url, $transactionId, $this->_getCredentials()->getAccountEmail(), $this->_getCredentials()->getAccountToken());
+            $url = sprintf('%s/%s?email=%s&token=%s', $url, $notificationId, $this->_getCredentials()->getAccountEmail(), $this->_getCredentials()->getAccountToken());
         }
 
         return $escapeHtml ? $this->helper()->htmlEscape($url) : $url;
