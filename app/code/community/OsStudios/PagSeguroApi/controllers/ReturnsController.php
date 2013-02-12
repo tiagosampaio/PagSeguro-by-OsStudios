@@ -52,7 +52,7 @@ class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Co
         /**
          * Validates Format: XXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXX
          */
-        if(!preg_match('/^[0-9A-Z]{6}\-[0-9A-Z]{12}\-[0-9A-Z]{12}\-[0-9A-Z]{6}$/'), strtoupper($post['notificationCode'])) {
+        if(!preg_match('/^[0-9A-Z]{6}\-[0-9A-Z]{12}\-[0-9A-Z]{12}\-[0-9A-Z]{6}$/', strtoupper($post['notificationCode']))) {
             return false;
         }
 
