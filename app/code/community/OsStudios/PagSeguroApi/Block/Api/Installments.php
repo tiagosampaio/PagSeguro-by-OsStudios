@@ -17,7 +17,7 @@
 
 /**
  * PagSeguro Api Payment Installments Block
- *
+ * Reference https://pagseguro.uol.com.br/para_seu_negocio/parcelamento_com_acrescimo.jhtml#rmcl
  */
 
 class OsStudios_PagSeguroApi_Block_Api_Installments extends Mage_Core_Block_Template
