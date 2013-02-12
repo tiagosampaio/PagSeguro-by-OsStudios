@@ -15,7 +15,7 @@
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
 
-class OsStudios_PagSeguroApi_PayController extends OsStudios_PagSeguroApi_Controller_Front_Action
+class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Controller_Front_Action
 {
     
     public function indexAction()

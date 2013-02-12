@@ -29,7 +29,9 @@
 
         <li><label><strong><?php echo $this->__('Payment Method')?></strong></label></li>
         <li>
+            <?php if($this->getTransactionPaymentMethodTypeLabel()):?>
             <?php echo $this->__('%s (%s)', $this->getTransactionPaymentMethodTypeLabel(), $this->getTransactionPaymentMethodCodeLabel()) ?>
+            <?php endif;?>
         </li>
 
         <li><label><strong><?php echo $this->__('Payment Status')?></strong></label></li>
