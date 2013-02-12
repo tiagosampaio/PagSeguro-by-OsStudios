@@ -30,7 +30,7 @@
                         <view_history translate="title">
                             <title>View History</title>
                             <action>pagseguroapi/adminhtml_returns/history</action>
-                            <sort_order>0</sort_order>
+                            <sort_order>10</sort_order>
                         </view_history>
                     </children>
                 </returns>
@@ -41,10 +41,15 @@
                         <request_update_orders translate="title">
                             <title>Check for Order Updates</title>
                             <action>pagseguroapi/adminhtml_actions/updateorders</action>
-                            <sort_order>0</sort_order>
+                            <sort_order>10</sort_order>
                         </request_update_orders>
                     </children>
                 </actions>
+                <payment_configurations translate="title">
+                    <title>Configurations</title>
+                    <action>adminhtml/system_config/edit/section/payment</action>
+                    <sort_order>100</sort_order>
+                </payment_configurations>
             </children>
         </pagseguroapi>
     </menu>
