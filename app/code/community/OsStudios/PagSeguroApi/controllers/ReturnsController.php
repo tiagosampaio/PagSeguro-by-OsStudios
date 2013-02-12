@@ -46,6 +46,9 @@ class OsStudios_PagSeguroApi_ReturnsController extends OsStudios_PagSeguroApi_Co
         if($transactionId) {
             $consulter = Mage::getModel('pagseguroapi/consulter');
             $consulter->consultByTransactionId($transactionId);
+        } else {
+            $transactions = Mage::getModel('pagseguroapi/returns_transaction')->getCollection();
+            echo 'Minha collection: ' . $transactions->count();
         }
     }
 

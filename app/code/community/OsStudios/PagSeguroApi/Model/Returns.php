@@ -19,17 +19,17 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 {
 
 	/**
-	 * Updates a single transaction by return or by consulting process
+	 * Updates a single transaction by return or consulting process
 	 *
 	 * @param Varien_Simplexml_Config $xml
 	 *
 	 * @return OsStudios_PagSeguroApi_Model_Returns
 	 */
-	public function updateSingleTransaction(Varien_Simplexml_Config $xml)
+	public function updateSingleTransaction(Varien_Simplexml_Config $xml, $receivedFrom = 1)
 	{
 		$transaction = Mage::getModel('pagseguroapi/returns_transaction');
 
-		if($this->_isTransactionCompatible($transaction->importData($xml))) {
+		if($this->_isTransactionCompatible($transaction->setReceivedFrom($receivedFrom)->importData($xml))) {
 			$this->_updatePaymentHistory($transaction);
 
 			if($this->getConfigData('automatically_change_orders')) {
@@ -67,9 +67,11 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 					if($this->getConfigData('automatically_hold_orders_for_billet')) {
 						try {
 							if($order->canHold()) {
+								Mage::dispatchEvent('osstudios_pagseguroapi_return_order_hold_before', array('order' => $order, 'transaction' => $transaction));
 							    $order->hold();
 							    //$order->addStatusHistoryComment($this->helper()->__('Automatically holded by PagSeguroApi. Payment method is billet.'), false);
 							    $order->save();
+							    Mage::dispatchEvent('osstudios_pagseguroapi_return_order_hold_after', array('order' => $order, 'transaction' => $transaction));
 							}
 						} catch (Exception $e) {
 							Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to hold order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_returns_exceptions.log');
@@ -94,6 +96,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 		                    $order->addStatusHistoryComment('PagSeguroApi: Order cannot be invoiced automatically.', false)->save();
 		                    break;
 		                }
+		                Mage::dispatchEvent('osstudios_pagseguroapi_return_order_invoice_before', array('order' => $order, 'transaction' => $transaction));
 						//START Handle Invoice
 						$invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
 						$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE);
@@ -105,6 +108,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						$order->addStatusHistoryComment($this->helper()->__('PagSeguroApi: Automatically invoiced by PagSeguroApi. PagSeguro confirmed the payment.'), false);
 						$order->save();
 						//END Handle Invoice
+						Mage::dispatchEvent('osstudios_pagseguroapi_return_order_invoice_after', array('order' => $order, 'transaction' => $transaction));
 					} catch (Exception $e) {
 						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to invoice order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_returns_exceptions.log');
 					}
@@ -130,6 +134,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						    $order->unhold();
 						}
 						if($order->canCancel()) {
+							Mage::dispatchEvent('osstudios_pagseguroapi_return_order_cancel_before', array('order' => $order, 'transaction' => $transaction));
 							$order->getPayment()->cancel();
 							$order->registerCancellation($this->helper()->__('PagSeguroApi: Automatically canceled by PagSeguroApi. PagSeguro has canceled the payment.'));
 							Mage::dispatchEvent('order_cancel_after', array('order' => $this));
@@ -161,8 +166,10 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 		if($history->getHistoryId()) {
 			$history->setPagseguroTransactionId($transaction->getCode())
 					->setPagseguroTransactionStatus($transaction->getStatus())
+					->setPagseguroTransactionFeeAmount($transaction->getFeeAmount())
 					->setPagseguroPaymentMethodType($transaction->getPaymentMethod()->getType())
 					->setPagseguroPaymentMethodCode($transaction->getPaymentMethod()->getCode())
+					->setPagseguroPaymentInstallmentCount($transaction->getInstallmentCount())
 					->setUpdatedAt(now());
 
 			$history->save();

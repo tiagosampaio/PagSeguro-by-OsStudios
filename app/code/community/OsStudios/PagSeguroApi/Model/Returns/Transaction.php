@@ -18,6 +18,11 @@
 class OsStudios_PagSeguroApi_Model_Returns_Transaction extends OsStudios_PagSeguroApi_Model_Returns
 {
 
+	protected function _construct()
+    {
+        $this->_init('pagseguroapi/returns_transaction');
+    }
+
 	public function importData(Varien_Simplexml_Config $xml)
 	{
 		$arr = $xml->getNode()->asArray();
@@ -55,11 +60,13 @@ class OsStudios_PagSeguroApi_Model_Returns_Transaction extends OsStudios_PagSegu
 		if($data['reference']) {
 			$order = Mage::getModel('sales/order')->loadByIncrementId($data['reference']);
 			if($order->getId()) {
-				$this->setOrder($order);
+				$this->setOrder($order)
+					 ->setOrderId($order->getEntityId());
 			}
 		}
 
-		$this->addData($data);
+		$this->addData($data)
+			 ->save();
 
 		return $this;
 	}

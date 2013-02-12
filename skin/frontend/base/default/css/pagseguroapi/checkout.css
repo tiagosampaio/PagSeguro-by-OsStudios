@@ -1,0 +1,53 @@
+.pagseguroapi-installments {
+	overflow:auto;
+}
+
+.pagseguroapi-installments .creditcard-list {
+	display:block;
+	overflow:auto;
+	margin-bottom:15px;
+}
+
+.pagseguroapi-installments .creditcard-list .creditcard-item {
+	float:left;
+	border:none;
+	margin:2px;
+}
+
+.pagseguroapi-installments .creditcard-list .creditcard-item a.creditcard-link-flag
+{
+	display:block;
+	text-indent:-99999px;
+	width:71px;
+	height:28px;
+	background:url('../../images/pagseguroapi/cards-sprite.gif') no-repeat white;
+	border:none;
+}
+
+.pagseguroapi-installments .creditcard-list .creditcard-item a.visa 		{ background-position:0 0; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.mastercard 	{ background-position:0 -28px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.diners 		{ background-position:0 -56px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.amex 		{ background-position:0 -84px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.hipercard 	{ background-position:0 -112px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.aura 		{ background-position:0 -140px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.elo 			{ background-position:0 -476px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.plenocard 	{ background-position:0 -504px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.personalcard { background-position:0 -532px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.brasilcard 	{ background-position:0 -560px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.jcb 			{ background-position:0 -588px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.discover 	{ background-position:0 -616px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.fortbrasil 	{ background-position:0 -644px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.cardban 		{ background-position:0 -672px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.valecard 	{ background-position:0 -700px; }
+.pagseguroapi-installments .creditcard-list .creditcard-item a.cabal 		{ background-position:0 -728px; }
+
+.pagseguroapi-installments .installment-table { border:solid 1px #ccc; }
+.pagseguroapi-installments .installment-table th,
+.pagseguroapi-installments .installment-table td { padding:2px 5px; border-bottom:solid 1px #efefef; }
+
+.pagseguroapi-installments .installment-table th { color:#5E8AB4; background-color:#D0DCE1; }
+
+
+.pagseguroapi-installments .installment-table .grandtotal,
+.pagseguroapi-installments .installment-table .totalvalue { text-align:right; }
+.pagseguroapi-installments .installment-table .qty { text-align:center; }

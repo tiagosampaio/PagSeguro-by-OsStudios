@@ -14,13 +14,16 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @author     Tiago Sampaio <tiago.sampaio@osstudios.com.br>
  */
-?>
-<fieldset class="form-list">
-    <ul id="payment_form_<?php echo $this->getMethodCode(); ?>" class="pagseguroapi-payment-method" style="display:none;">
-        <?php if ($this->getShowMessage()): ?>
-        <li><?php echo $this->getMessage(); ?></li>
-        <?php endif; ?>
-        <!--<li><img src="<?php echo $this->getSkinUrl('images/pagseguroapi/logo-pagseguro.gif')?>"/></li>-->
-        <li><?php echo $this->getLayout()->createBlock('pagseguroapi/api_installments')->toHtml();?></li>
-    </ul>
-</fieldset>
+
+/**
+ * 
+ * PagSeguro Api Controller Admin Abstract
+ *
+ */
+
+class OsStudios_PagSeguroApi_Controller_Adminhtml_Action extends Mage_Adminhtml_Controller_Action
+{
+    
+    
+    
+}

@@ -26,6 +26,7 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 
 	/**
 	 * Makes the consult by Transaction ID
+	 * The store is consulting a transaction in PagSeguro here
 	 *
 	 * @param (string) $transactionId
  	 * 
@@ -36,7 +37,7 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 		if($transactionId) {
 			$url = $this->getPagSeguroTransactionUrl($transactionId);
 			
-			$this->_consult($url);
+			$this->_consult($url, 2);
 
 			return $this;
 		}
@@ -45,7 +46,8 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 
 	/**
 	 * Makes the consult by Notification ID
-	 *
+	 * PagSeguro sent a notification to store
+	 * 
 	 * @param (string) $notificationId
  	 * 
 	 * @return OsStudios_PagSeguroApi_Model_Consulter
@@ -54,7 +56,7 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 	{
 		$url = $this->getPagSeguroNotificationUrl($notificationId);
 
-		$this->_consult($url);
+		$this->_consult($url, 1);
 
 		return $this;
 	}
@@ -62,13 +64,13 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 
 	/**
 	 * Abstract method that makes the real consult in PagSeguro
-	 * but not proccess the result itself
+	 * but not process the result itself, only gets the response
 	 *
 	 * @param (string) $url
  	 * 
 	 * @return 
 	 */
-	protected function _consult($url)
+	protected function _consult($url, $receivedFrom = 1)
 	{
 		$client = new Zend_Http_Client($url);
 		$client->setMethod(Zend_Http_Client::GET);
@@ -82,7 +84,7 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 
 		$xml = new Varien_Simplexml_Config($body);
 		
-		$this->updateSingleTransaction($xml);
+		$this->updateSingleTransaction($xml, $receivedFrom);
 	}
 
 }

@@ -46,6 +46,9 @@
                     <payment_history>
                         <table>osstudios_pagseguroapi_payment_history</table>
                     </payment_history>
+                    <returns_transaction>
+                        <table>osstudios_pagseguroapi_returns_transaction</table>
+                    </returns_transaction>
                 </entities>
             </osstudios_pagseguroapi_resource>
         </models>
@@ -315,6 +318,127 @@
                         </code_501>
                     </codes>
                 </payment_methods>
+                <installments>
+                    <min>5.00000</min>
+                    <credit_cards>
+                        <visa>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Visa</label>
+                            <max_installment>12</max_installment>
+                        </visa>
+                        <mastercard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito MasterCard</label>
+                            <max_installment>12</max_installment>
+                        </mastercard>
+                        <amex>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito American Express</label>
+                            <max_installment>15</max_installment>
+                        </amex>
+                        <diners>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Diners</label>
+                            <max_installment>12</max_installment>
+                        </diners>
+                        <hipercard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Hipercard</label>
+                            <max_installment>12</max_installment>
+                        </hipercard>
+                        <aura>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Aura</label>
+                            <max_installment>18</max_installment>
+                        </aura>
+                        <elo>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Elo</label>
+                            <max_installment>12</max_installment>
+                        </elo>
+                        <plenocard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito PLENOCard</label>
+                            <max_installment>3</max_installment>
+                        </plenocard>
+                        <personalcard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito PersonalCard</label>
+                            <max_installment>3</max_installment>
+                        </personalcard>
+                        <jcb>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito JCB</label>
+                            <max_installment>12</max_installment>
+                        </jcb>
+                        <discover>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito Discover</label>
+                            <max_installment>12</max_installment>
+                        </discover>
+                        <brasilcard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito BrasilCard</label>
+                            <max_installment>3</max_installment>
+                        </brasilcard>
+                        <fortbrasil>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito FORTBRASIL</label>
+                            <max_installment>12</max_installment>
+                        </fortbrasil>
+                        <cardban>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito CARDBAN</label>
+                            <max_installment>12</max_installment>
+                        </cardban>
+                        <valecard>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito VALECARD</label>
+                            <max_installment>3</max_installment>
+                        </valecard>
+                        <cabal>
+                            <active>1</active>
+                            <value></value>
+                            <label>Cartão de crédito CABAL</label>
+                            <max_installment>12</max_installment>
+                        </cabal>
+                    </credit_cards>
+                    <factors>
+                        <factor_1>1.00000</factor_1>
+                        <factor_2>0.51875</factor_2>
+                        <factor_3>0.35007</factor_3>
+                        <factor_4>0.26575</factor_4>
+                        <factor_5>0.21518</factor_5>
+                        <factor_6>0.18148</factor_6>
+                        <factor_7>0.15743</factor_7>
+                        <factor_8>0.13941</factor_8>
+                        <factor_9>0.12540</factor_9>
+                        <factor_10>0.11420</factor_10>
+                        <factor_11>0.10505</factor_11>
+                        <factor_12>0.09743</factor_12>
+                        <factor_13>0.09099</factor_13>
+                        <factor_14>0.08548</factor_14>
+                        <factor_15>0.08071</factor_15>
+                        <factor_16>0.07654</factor_16>
+                        <factor_17>0.07287</factor_17>
+                        <factor_18>0.06961</factor_18>
+                    </factors>
+                </installments>
                 <shipping>
                     <types>
                         <pac>

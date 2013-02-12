@@ -18,25 +18,36 @@
 -->
 
 <config>
-    <!--
     <menu>
-    	<sales>
-    		<children>
-    			<pagseguro translate="title" module="pagseguroapi">
-                    <title>PagSeguroApi</title>
-                    <sort_order>1000</sort_order>
+        <pagseguroapi translate="title" module="pagseguroapi">
+            <title>PagSeguro API</title>
+            <sort_order>85</sort_order>
+            <children>
+                <returns translate="title">
+                    <title>API Returns and Consults</title>
+                    <sort_order>10</sort_order>
                     <children>
-                    	<update_check translate="title" module="pagseguroapi">
-                    		<title>Check for Order Updates</title>
-                    		<action>pagseguro/adminhtml_returns/updates</action>
-                    		<sort_order>0</sort_order>
-                    	</update_check>
+                        <view_history translate="title">
+                            <title>View History</title>
+                            <action>pagseguroapi/adminhtml_returns/history</action>
+                            <sort_order>0</sort_order>
+                        </view_history>
                     </children>
-                </pagseguro>
-    		</children>
-    	</sales>
+                </returns>
+                <actions translate="title">
+                    <title>Actions</title>
+                    <sort_order>20</sort_order>
+                    <children>
+                        <request_update_orders translate="title">
+                            <title>Check for Order Updates</title>
+                            <action>pagseguroapi/adminhtml_actions/updateorders</action>
+                            <sort_order>0</sort_order>
+                        </request_update_orders>
+                    </children>
+                </actions>
+            </children>
+        </pagseguroapi>
     </menu>
-    -->
     <acl>
     	<resources>
     		<admin>
@@ -56,22 +67,32 @@
                         	</config>
 						</children>
     				</system>
-                    <!--
-    				<sales>
-    					<children>
-    						<pagseguroapi translate="title" module="pagseguroapi">
-    							<title>PagSeguro</title>
-    							<sort_order>0</sort_order>
-    							<children>
-    								<update_check translate="title">
-    									<title>Check for Order Updates</title>
-										<sort_order>0</sort_order>    									
-    								</update_check>
-    							</children>
-    						</pagseguroapi>
-    					</children>
-    				</sales>
-                    -->
+                    <pagseguroapi translate="title" module="pagseguroapi">
+                        <title>PagSeguro API</title>
+                        <sort_order>1000</sort_order>
+                        <children>
+                            <returns translate="title">
+                                <title>API Returns and Consults</title>
+                                <sort_order>10</sort_order>
+                                <children>
+                                    <view_history translate="title">
+                                        <title>View History</title>
+                                        <sort_order>10</sort_order>
+                                    </view_history>
+                                </children>
+                            </returns>
+                            <actions translate="title">
+                                <title>Actions</title>
+                                <sort_order>20</sort_order>
+                                <children>
+                                    <request_update_orders translate="title">
+                                        <title>Check for Order Updates</title>
+                                        <sort_order>10</sort_order>
+                                    </request_update_orders>
+                                </children>
+                            </actions>
+                        </children>
+                    </pagseguroapi>
     			</children>
     		</admin>
     	</resources>
