@@ -29,7 +29,7 @@
                     <children>
                         <view_history translate="title">
                             <title>View History</title>
-                            <action>pagseguroapi/adminhtml_returns/history</action>
+                            <action>pagseguroapi/adminhtml_transaction/history</action>
                             <sort_order>10</sort_order>
                         </view_history>
                     </children>
