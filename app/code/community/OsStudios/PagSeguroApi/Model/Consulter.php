@@ -35,7 +35,7 @@ class OsStudios_PagSeguroApi_Model_Consulter extends OsStudios_PagSeguroApi_Mode
 	{
 		if($transactionId) {
 			$url = $this->getPagSeguroTransactionUrl($transactionId);
-
+			
 			$this->_consult($url);
 
 			return $this;

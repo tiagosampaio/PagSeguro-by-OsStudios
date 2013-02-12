@@ -68,7 +68,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 							    $order->addStatusHistoryComment($this->helper()->__('Automatically holded by PagSeguroApi. Payment method is billet.'), false);
 							}
 						} catch (Exception $e) {
-							Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to hold order automatically. Exception message: %s.', $e->getMessage());
+							Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to hold order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_returns_exceptions.log');
 						}
 					}
 				}				
@@ -101,7 +101,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 						$transactionSave->save();
 						//END Handle Invoice
 					} catch (Exception $e) {
-						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to invoice order automatically. Exception message: %s.', $e->getMessage());
+						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to invoice order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_returns_exceptions.log');
 					}
 				}
 
@@ -128,7 +128,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 							$order->cancel()->save();
 						}
 					} catch (Exception $e) {
-						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to cancel order automatically. Exception message: %s.', $e->getMessage());
+						Mage::log($this->helper()->__('PagSeguroApi: Exception occurred when trying to cancel order automatically. Exception message: %s.', $e->getMessage()), null, 'pagseguroapi_return_exceptions.log');
 					}
 				}
 
