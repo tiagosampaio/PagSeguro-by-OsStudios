@@ -146,6 +146,9 @@
 				<extra_amount>0.00</extra_amount>
 				<shipping_type>3</shipping_type>
                 <show_installments>1</show_installments>
+                <allow_log_notifications>1</allow_log_notifications>
+                <allow_log_consults>1</allow_log_consults>
+                <allow_log_mass_consults>1</allow_log_mass_consults>
 				<payment_action>createTransaction</payment_action>
 				<pagseguro_api_url>https://ws.pagseguro.uol.com.br/v2/checkout</pagseguro_api_url>
              	<pagseguro_api_redirect_url>https://pagseguro.uol.com.br/v2/checkout/payment.html</pagseguro_api_redirect_url>

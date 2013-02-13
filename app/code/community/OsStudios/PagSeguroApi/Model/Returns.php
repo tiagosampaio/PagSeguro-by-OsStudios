@@ -28,8 +28,9 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 	public function updateSingleTransaction(Varien_Simplexml_Config $xml, $receivedFrom = 1)
 	{
 		$transaction = Mage::getModel('pagseguroapi/returns_transaction');
-
-		if($this->_isTransactionCompatible($transaction->setReceivedFrom($receivedFrom)->importData($xml))) {
+		$transaction->setReceivedFrom($receivedFrom)->importData($xml);
+		
+		if($transaction->getIsValid()) {
 			$this->_updatePaymentHistory($transaction);
 
 			if($this->getConfigData('automatically_change_orders')) {
@@ -184,35 +185,5 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 		return $this;
 	}
 
-
-	/**
-	 * Verifies if the transaction passed is compatible with the order in the system.
-	 *
-	 * @param OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction
-	 *
-	 * @return (boolean)
-	 */
-	private function _isTransactionCompatible(OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction)
-	{
-		if(!$transaction->getOrder() || !($transaction->getOrder() instanceof Mage_Sales_Model_Order)) {
-			return false;
-		} elseif(((float) $transaction->getOrder()->getGrandTotal() - (float) $transaction->getGrossAmount()) > 0) {
-			return false;
-		} 
-
-		/**
-		 * Validates only if the consult was made by massaction option
-		 *
-		 */
-		if($transaction->getReceivedFrom() != 3) {
-			if($transaction->getOrder()->getCustomerEmail() !== $transaction->getSender()->getEmail()) {
-				return false;
-			} elseif((int) count($transaction->getOrder()->getAllVisibleItems()) !== (int) $transaction->getItemCount()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
 
 }
