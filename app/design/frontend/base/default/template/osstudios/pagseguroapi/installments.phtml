@@ -68,6 +68,15 @@
 			<tbody>
 				<?php $y = 1; ?>
 				<?php foreach($this->getFactors() as $key => $factor):?>
+				<?php
+					$min = (float) Mage::getStoreConfig('osstudios_pagseguroapi/transaction/installments/min');
+					if(!$min) {
+						$min = 5;
+					}
+					if(($grandTotal * $factor) < $min) {
+						break;
+					}
+				?>
 				<tr>
 					<td class="grandtotal"><?php echo Mage::helper('core')->currency($grandTotal); ?></td>
 					<td class="qty"><?php echo $this->__('%s time(s)', $y) ?></td>
