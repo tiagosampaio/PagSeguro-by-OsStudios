@@ -20,10 +20,70 @@ class OsStudios_PagSeguroApi_Adminhtml_TransactionController extends OsStudios_P
 
 	public function historyAction()
 	{
+		$this->_title($this->__('PagSeguro API'))->_title($this->__('Transaction'))->_title($this->__('View History'));
+
 		$this->loadLayout();
 		$this->renderLayout();
 	}
 
+
+	/**
+	 * Mass remove
+	 *
+	 */
+	public function massRemoveAction()
+	{
+		try {
+			$ids = $this->getRequest()->getPost('ids', array());
+			foreach ($ids as $id) {
+                  $model = Mage::getModel('pagseguroapi/returns_transaction');
+				  $model->setId($id)->delete();
+			}
+			Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper("adminhtml")->__('Item(s) was successfully removed'));
+		}
+		catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+		}
+		$this->_redirect('*/*/history');
+	}
+	
+
+	/**
+	 * Export order grid to CSV format
+	 *
+	 */
+	public function exportCsvAction()
+	{
+		$fileName   = 'osstudios_pagseguro_returns_transactions.csv';
+		$grid       = $this->getLayout()->createBlock('pagseguroapi/adminhtml_transaction_grid');
+		$this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
+	}
+
+
+	/**
+	 * Export order grid to Excel XML format
+	 *
+	 */
+	public function exportExcelAction()
+	{
+		$fileName   = 'osstudios_pagseguro_returns_transactions.xml';
+		$grid       = $this->getLayout()->createBlock('pagseguroapi/adminhtml_transaction_grid');
+		$this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+	}
+
+
+	public function gridAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+	
+
+	/**
+	 * ACL Checks
+	 *
+	 * @return boolean
+	 */
 	protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('pagseguroapi/returns');

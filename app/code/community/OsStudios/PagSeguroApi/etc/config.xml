@@ -162,18 +162,24 @@
     	</payment>
     	<osstudios_pagseguroapi>
             <transaction>
+                <types>
+                    <type_1>
+                        <value>1</value>
+                        <label>Pagamento</label>
+                    </type_1>
+                </types>
                 <status>
                     <status_1>
                         <value>1</value>
-                        <label>Aguardando pagamento</label>
+                        <label>Aguardando Pagamento</label>
                     </status_1>
                     <status_2>
                         <value>2</value>
-                        <label>Em análise</label>
+                        <label>Em Análise</label>
                     </status_2>
                     <status_3>
                         <value>3</value>
-                        <label>Paga</label>
+                        <label>Pago</label>
                     </status_3>
                     <status_4>
                         <value>4</value>
@@ -181,22 +187,22 @@
                     </status_4>
                     <status_5>
                         <value>5</value>
-                        <label>Em disputa</label>
+                        <label>Em Disputa</label>
                     </status_5>
                     <status_6>
                         <value>6</value>
-                        <label>Devolvida</label>
+                        <label>Devolvido</label>
                     </status_6>
                     <status_7>
                         <value>7</value>
-                        <label>Cancelada</label>
+                        <label>Cancelado</label>
                     </status_7>
                 </status>
                 <payment_methods>
                     <types>
                         <type_1>
                             <value>1</value>
-                            <label>Cartão de crédito</label>
+                            <label>Cartão de Crédito</label>
                         </type_1>
                         <type_2>
                             <value>2</value>
@@ -204,7 +210,7 @@
                         </type_2>
                         <type_3>
                             <value>3</value>
-                            <label>Débito online (TEF)</label>
+                            <label>Débito Online (TEF)</label>
                         </type_3>
                         <type_4>
                             <value>4</value>
@@ -219,55 +225,55 @@
                         <!-- Cartão de Crédito -->
                         <code_101>
                             <value>101</value>
-                            <label>Cartão de crédito Visa</label>
+                            <label>Cartão de Crédito Visa</label>
                         </code_101>
                         <code_102>
                             <value>102</value>
-                            <label>Cartão de crédito MasterCard</label>
+                            <label>Cartão de Crédito MasterCard</label>
                         </code_102>
                         <code_103>
                             <value>103</value>
-                            <label>Cartão de crédito American Express</label>
+                            <label>Cartão de Crédito American Express</label>
                         </code_103>
                         <code_104>
                             <value>104</value>
-                            <label>Cartão de crédito Diners</label>
+                            <label>Cartão de Crédito Diners</label>
                         </code_104>
                         <code_105>
                             <value>105</value>
-                            <label>Cartão de crédito Hipercard</label>
+                            <label>Cartão de Crédito Hipercard</label>
                         </code_105>
                         <code_106>
                             <value>106</value>
-                            <label>Cartão de crédito Aura</label>
+                            <label>Cartão de Crédito Aura</label>
                         </code_106>
                         <code_107>
                             <value>107</value>
-                            <label>Cartão de crédito Elo</label>
+                            <label>Cartão de Crédito Elo</label>
                         </code_107>
                         <code_108>
                             <value>108</value>
-                            <label>Cartão de crédito PLENOCard</label>
+                            <label>Cartão de Crédito PLENOCard</label>
                         </code_108>
                         <code_109>
                             <value>109</value>
-                            <label>Cartão de crédito PersonalCard</label>
+                            <label>Cartão de Crédito PersonalCard</label>
                         </code_109>
                         <code_110>
                             <value>110</value>
-                            <label>Cartão de crédito JCB</label>
+                            <label>Cartão de Crédito JCB</label>
                         </code_110>
                         <code_111>
                             <value>111</value>
-                            <label>Cartão de crédito Discover</label>
+                            <label>Cartão de Crédito Discover</label>
                         </code_111>
                         <code_112>
                             <value>112</value>
-                            <label>Cartão de crédito BrasilCard</label>
+                            <label>Cartão de Crédito BrasilCard</label>
                         </code_112>
                         <code_113>
                             <value>113</value>
-                            <label>Cartão de crédito FORTBRASIL</label>
+                            <label>Cartão de Crédito FORTBRASIL</label>
                         </code_113>
                         <!-- Boleto-->
                         <code_201>
@@ -281,31 +287,31 @@
                         <!-- Débito online (TEF) -->
                         <code_301>
                             <value>301</value>
-                            <label>Débito online Bradesco</label>
+                            <label>Débito Online Bradesco</label>
                         </code_301>
                         <code_302>
                             <value>302</value>
-                            <label>Débito online Itaú</label>
+                            <label>Débito Online Itaú</label>
                         </code_302>
                         <code_303>
                             <value>303</value>
-                            <label>Débito online Unibanco</label>
+                            <label>Débito Online Unibanco</label>
                         </code_303>
                         <code_304>
                             <value>304</value>
-                            <label>Débito online Banco do Brasil</label>
+                            <label>Débito Online Banco do Brasil</label>
                         </code_304>
                         <code_305>
                             <value>305</value>
-                            <label>Débito online Banco Real</label>
+                            <label>Débito Online Banco Real</label>
                         </code_305>
                         <code_306>
                             <value>306</value>
-                            <label>Débito online Banrisul</label>
+                            <label>Débito Online Banrisul</label>
                         </code_306>
                         <code_307>
                             <value>307</value>
-                            <label>Débito online HSBC</label>
+                            <label>Débito Online HSBC</label>
                         </code_307>
                         <!-- Saldo PagSeguro -->
                         <code_401>
