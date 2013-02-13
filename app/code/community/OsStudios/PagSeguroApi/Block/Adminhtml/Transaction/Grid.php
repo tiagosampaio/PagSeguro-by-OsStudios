@@ -76,7 +76,7 @@ class OsStudios_PagSeguroApi_Block_Adminhtml_Transaction_Grid extends Mage_Admin
 			'index' => 'status',
 			'type' => 'options',
 			'options'=> Mage::getModel('pagseguroapi/system_config_source_transaction_status')->getAssociativeArray(),
-			'width' => '50px',
+			'width' => '150px',
 		));
 
 		$this->addColumn('fee_amount', array(
@@ -98,10 +98,7 @@ class OsStudios_PagSeguroApi_Block_Adminhtml_Transaction_Grid extends Mage_Admin
 			'header' => Mage::helper('pagseguroapi')->__('Received From'),
 			'index' => 'received_from',
 			'type' => 'options',
-			'options' => array(
-				1 => $this->__('Notifications'),
-				2 => $this->__('Consults'),
-			),
+			'options' => Mage::getModel('pagseguroapi/system_config_source_transaction_sources')->getAssociativeArray(),
 			'width' => '50px',
 		));
 

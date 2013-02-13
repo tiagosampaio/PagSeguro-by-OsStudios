@@ -18,11 +18,16 @@
 class OsStudios_PagSeguroApi_Adminhtml_TransactionController extends OsStudios_PagSeguroApi_Controller_Adminhtml_Action
 {
 
+	/**
+	 * View Transaction History
+	 *
+	 */
 	public function historyAction()
 	{
 		$this->_title($this->__('PagSeguro API'))->_title($this->__('Transaction'))->_title($this->__('View History'));
 
 		$this->loadLayout();
+		$this->_initLayoutMessages('admin/session');
 		$this->renderLayout();
 	}
 
@@ -39,7 +44,7 @@ class OsStudios_PagSeguroApi_Adminhtml_TransactionController extends OsStudios_P
                   $model = Mage::getModel('pagseguroapi/returns_transaction');
 				  $model->setId($id)->delete();
 			}
-			Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper("adminhtml")->__('Item(s) was successfully removed'));
+			Mage::getSingleton('adminhtml/session')->addSuccess($this->__('%s transaction(s) was successfully removed.', count($ids)));
 		}
 		catch (Exception $e) {
 			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -72,12 +77,16 @@ class OsStudios_PagSeguroApi_Adminhtml_TransactionController extends OsStudios_P
 	}
 
 
+	/**
+	 * Used for ajax update in transaction history grid
+	 *
+	 */
 	public function gridAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
-	
+
 
 	/**
 	 * ACL Checks

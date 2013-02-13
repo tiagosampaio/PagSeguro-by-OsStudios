@@ -162,10 +162,24 @@
     	</payment>
     	<osstudios_pagseguroapi>
             <transaction>
+                <sources>
+                    <sources_1>
+                        <value>1</value>
+                        <label>Notifications</label>
+                    </sources_1>
+                    <sources_2>
+                        <value>2</value>
+                        <label>Consults</label>
+                    </sources_2>
+                    <sources_3>
+                        <value>3</value>
+                        <label>Mass Consults</label>
+                    </sources_3>
+                </sources>
                 <types>
                     <type_1>
                         <value>1</value>
-                        <label>Pagamento</label>
+                        <label>Payment</label>
                     </type_1>
                 </types>
                 <status>

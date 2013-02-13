@@ -20,8 +20,14 @@ class OsStudios_PagSeguroApi_Adminhtml_ActionsController extends OsStudios_PagSe
 
 	public function updateordersAction()
 	{
-		$this->loadLayout();
-		$this->renderLayout();
+		try {
+			$consulter = Mage::getModel('pagseguroapi/consulter');
+			$consulter->massConsult();
+		} catch (Exception $e) {
+			Mage::getSingleton('admin/session')->addError($e->getMessage());
+		}
+
+		$this->_redirect('*/adminhtml_transaction/history');
 	}
 
 	protected function _isAllowed()

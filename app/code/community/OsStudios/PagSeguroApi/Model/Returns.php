@@ -23,7 +23,7 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 	 *
 	 * @param Varien_Simplexml_Config $xml
 	 *
-	 * @return OsStudios_PagSeguroApi_Model_Returns
+	 * @return (boolean)
 	 */
 	public function updateSingleTransaction(Varien_Simplexml_Config $xml, $receivedFrom = 1)
 	{
@@ -35,9 +35,11 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 			if($this->getConfigData('automatically_change_orders')) {
 				$this->_updateOrderByTransaction($transaction);
 			}
+
+			return true;
 		}
 
-		return $this;
+		return false;
 	}
 
 
@@ -161,18 +163,22 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 	 */
 	protected function _updatePaymentHistory(OsStudios_PagSeguroApi_Model_Returns_Transaction $transaction, $forceUpdate = true)
 	{
-		$history = Mage::getModel('pagseguroapi/payment_history')->load($transaction->getOrder()->getEntityId(), 'order_id');
+		try {
+			$history = Mage::getModel('pagseguroapi/payment_history')->load($transaction->getOrder()->getEntityId(), 'order_id');
 
-		if($history->getHistoryId()) {
-			$history->setPagseguroTransactionId($transaction->getCode())
-					->setPagseguroTransactionStatus($transaction->getStatus())
-					->setPagseguroTransactionFeeAmount($transaction->getFeeAmount())
-					->setPagseguroPaymentMethodType($transaction->getPaymentMethod()->getType())
-					->setPagseguroPaymentMethodCode($transaction->getPaymentMethod()->getCode())
-					->setPagseguroPaymentInstallmentCount($transaction->getInstallmentCount())
-					->setUpdatedAt(now());
+			if($history->getHistoryId()) {
+				$history->setPagseguroTransactionId($transaction->getCode())
+						->setPagseguroTransactionStatus($transaction->getStatus())
+						->setPagseguroTransactionFeeAmount($transaction->getFeeAmount())
+						->setPagseguroPaymentMethodType($transaction->getPaymentMethod()->getType())
+						->setPagseguroPaymentMethodCode($transaction->getPaymentMethod()->getCode())
+						->setPagseguroPaymentInstallmentCount($transaction->getInstallmentCount())
+						->setUpdatedAt(now());
 
-			$history->save();
+				$history->save();
+			}
+		} catch (Exception $e) {
+			/* @todo */
 		}
 
 		return $this;
@@ -192,10 +198,18 @@ class OsStudios_PagSeguroApi_Model_Returns extends OsStudios_PagSeguroApi_Model_
 			return false;
 		} elseif(((float) $transaction->getOrder()->getGrandTotal() - (float) $transaction->getGrossAmount()) > 0) {
 			return false;
-		} elseif($transaction->getOrder()->getCustomerEmail() !== $transaction->getSender()->getEmail()) {
-			return false;
-		} elseif((int) count($transaction->getOrder()->getAllVisibleItems()) !== (int) $transaction->getItemCount()) {
-			return false;
+		} 
+
+		/**
+		 * Validates only if the consult was made by massaction option
+		 *
+		 */
+		if($transaction->getReceivedFrom() != 3) {
+			if($transaction->getOrder()->getCustomerEmail() !== $transaction->getSender()->getEmail()) {
+				return false;
+			} elseif((int) count($transaction->getOrder()->getAllVisibleItems()) !== (int) $transaction->getItemCount()) {
+				return false;
+			}
 		}
 
 		return true;

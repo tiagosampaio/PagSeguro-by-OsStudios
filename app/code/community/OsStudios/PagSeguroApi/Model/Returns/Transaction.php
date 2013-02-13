@@ -27,35 +27,66 @@ class OsStudios_PagSeguroApi_Model_Returns_Transaction extends OsStudios_PagSegu
 	{
 		$arr = $xml->getNode()->asArray();
 
-		$paymentMethod = new Varien_Object();
-		$paymentMethod->setType($arr['paymentMethod']['type'])
-					  ->setCode($arr['paymentMethod']['code']);
-
-		$sender = new Varien_Object();
-		$sender->setName($arr['sender']['name'])
-			   ->setEmail($arr['sender']['email']);
-
 		$data = array(
 			'date' 					=> $arr['date'],
-			'code' 					=> $arr['code'],
 			'reference' 			=> $arr['reference'],
 			'type' 					=> $arr['type'],
 			'status' 				=> $arr['status'],
 			'last_event_date' 		=> $arr['lastEventDate'],
-			'payment_method' 		=> $paymentMethod,
-			'payment_method_type'	=> $paymentMethod->getType(),
-			'payment_method_code'	=> $paymentMethod->getCode(),
 			'gross_amount' 			=> $arr['grossAmount'],
 			'discount_amount' 		=> $arr['discountAmount'],
 			'fee_amount' 			=> $arr['feeAmount'],
 			'net_amount' 			=> $arr['netAmount'],
 			'extra_amount' 			=> $arr['extraAmount'],
-			'installment_count' 	=> $arr['installmentCount'],
-			'item_count' 			=> $arr['itemCount'],
-			'sender' 				=> $sender,
-			'sender_name' 			=> $sender->getName(),
-			'sender_email' 			=> $sender->getEmail(),
 		);
+
+		if(isset($arr['installmentCount'])) {
+			$data['installment_count'] = $arr['installmentCount'];
+		}
+
+		if(isset($arr['itemCount'])) {
+			$data['item_count'] = $arr['itemCount'];
+		}
+
+		if(isset($arr['code'])) {
+			$data['code'] = $arr['code'];
+		}
+
+		/* Payment Method */
+		$paymentMethod = new Varien_Object();
+		if(isset($arr['paymentMethod'])) {
+			if(isset($arr['paymentMethod']['type'])) {
+				$paymentMethod->setType($arr['paymentMethod']['type']);
+				$data['payment_method_type'] = $paymentMethod->getType();
+			}
+
+			if(isset($arr['paymentMethod']['code'])) {
+				$paymentMethod->setCode($arr['paymentMethod']['code']);
+			  	$data['payment_method_code'] = $paymentMethod->getCode();
+			}
+		}
+		$data['payment_method'] = $paymentMethod;
+
+		/* Sender */
+		$sender = new Varien_Object();
+		if(isset($arr['sender'])) {
+			if(isset($arr['sender']['name'])) {
+				$sender->setName($arr['sender']['name']);
+				$data['sender_name'] = $sender->getName();
+			}
+
+			if(isset($arr['sender']['email'])) {
+				$sender->setEmail($arr['sender']['email']);
+				$data['sender_email'] = $sender->getEmail();
+			}
+		}
+		$data['sender'] = $sender;
+		
+
+
+
+
+		
 
 		if($data['reference']) {
 			$order = Mage::getModel('sales/order')->loadByIncrementId($data['reference']);

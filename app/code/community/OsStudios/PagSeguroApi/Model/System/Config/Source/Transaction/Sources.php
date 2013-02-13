@@ -16,22 +16,17 @@
  */
 
 /**
- * PagSeguro Api Shipping Type Source
+ * PagSeguro Api Shipping Status Source
  *
  */
 
-class OsStudios_PagSeguroApi_Model_System_Config_Source_Transaction_Config
+class OsStudios_PagSeguroApi_Model_System_Config_Source_Transaction_Sources extends OsStudios_PagSeguroApi_Model_System_Config_Source_Transaction_Config
 {
 	
-	public function getAssociativeArray()
+	public function toOptionArray()
 	{
-		$options = $this->toOptionArray();
-		$associative = array();
-		foreach($options as $key => $option) {
-			$associative[$option['value']] = Mage::helper('pagseguroapi')->__($option['label']);
-		}
-
-		return $associative;
+        $options = Mage::app()->getConfig()->getNode('default/osstudios_pagseguroapi/transaction/sources')->asArray();
+        return $options;
 	}
 
 }

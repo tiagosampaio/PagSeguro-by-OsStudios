@@ -16,7 +16,7 @@
  */
 
 /**
- * PagSeguro Api Shipping Type Source
+ * PagSeguro Api Shipping Status Source
  *
  */
 
